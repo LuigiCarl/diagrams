@@ -337,6 +337,10 @@
       <a href="#fig47" class="nav-link">Fig 4.7: Rider Activity</a>
       <a href="#fig48" class="nav-link">Fig 4.8: Customer Activity</a>
       <a href="#fig49" class="nav-link">Fig 4.9: ERD</a>
+      <a href="#fig410" class="nav-link">Fig 4.10: Geocoding Cascade</a>
+      <a href="#fig411" class="nav-link">Fig 4.11: Order State Machine</a>
+      <a href="#fig412" class="nav-link">Fig 4.12: Reverb WebSockets</a>
+      <a href="#fig413" class="nav-link">Fig 4.13: OTP Security Flow</a>
     </div>
   </nav>
 
@@ -412,7 +416,7 @@ flowchart TB
     %% ==============================================================
     subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
         direction LR
-        DB[("🗄️ <b>PostgreSQL Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        DB[("🗄️ <b>MySQL / MariaDB Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
         OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
         FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
     end
@@ -461,7 +465,7 @@ flowchart TB
       </div>
       <div class="card-footer">
         <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formally implements the multi-layer system architecture described in Chapter 4 (Section 4.1, Figure 4.1). Bridges the User Layer, Mobile Application Layer (React Native/Expo), Cloud Layer (Laravel 13 Sanctum API Gateway, Core Business Engines & Reverb WebSockets), and the Data Persistence Layer (PostgreSQL, OSM/OSRM GIS, FCM) with strict top-to-bottom flow without visual clutter.
+          <strong>Methodological Significance:</strong> Formally implements the multi-layer system architecture described in Chapter 4 (Section 4.1, Figure 4.1). Bridges the User Layer, Mobile Application Layer (React Native/Expo), Cloud Layer (Laravel 13 Sanctum API Gateway, Core Business Engines & Reverb WebSockets), and the Data Persistence Layer (MySQL / MariaDB, OSM/OSRM GIS, FCM) with strict top-to-bottom flow without visual clutter.
         </p>
         <details>
           <summary>View Raw Mermaid Source</summary>
@@ -520,7 +524,7 @@ flowchart TB
     %% ==============================================================
     subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
         direction LR
-        DB[("🗄️ <b>PostgreSQL Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        DB[("🗄️ <b>MySQL / MariaDB Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
         OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
         FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
     end
@@ -1955,6 +1959,354 @@ erDiagram
         string user_category
         decimal overall_mean
     }</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 10. Fig 4.10: Geocoding Cascade -->
+    <section class="diagram-card" id="fig410">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>📍</span> Fig. 4.10: 5-Tier Bulan Address & Geocoding Fallback Cascade</h2>
+          <p>Deterministic Geocoding Algorithm handling informal Philippine rural addresses across Bulan's 63 barangays and landmarks</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig410', 'Fig_4_10_Geocoding_Cascade')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig410', 'Fig_4_10_Geocoding_Cascade')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig410')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig410">
+flowchart TD
+    Start(["Input: Customer Delivery Address"]) --> Tier1{"1. Exact GPS Available?<br/>(lat != 0 and lng != 0)"}
+    
+    Tier1 -->|Yes| Res1["✅ <b>Tier 1: Exact GPS Coordinates</b><br/>Return provided device lat/lng<br/>(isApprox = false)"]
+    Tier1 -->|No| Tier2{"2. Landmark Field Provided?<br/>(Exact or substring match)"}
+    
+    Tier2 -->|Match Found| Res2["📍 <b>Tier 2: Bulan Landmark Lookup</b><br/>Match with BULAN_LANDMARKS_COORDS<br/>(e.g., SSU Bulan, Public Market, Freedom Park)<br/>(isApprox = true)"]
+    Tier2 -->|No Landmark| Tier3{"3. Barangay Field Provided?<br/>(Normalized string match)"}
+    
+    Tier3 -->|Match Found| Res3["🏘️ <b>Tier 3: Barangay Centroid Lookup</b><br/>Match with BULAN_BARANGAYS_COORDS<br/>(PhilAtlas verified coordinates for 63 Bulan Barangays)<br/>(isApprox = true)"]
+    Tier3 -->|No Barangay Match| Tier4{"4. Text Scanning in Address Line?<br/>(Purok, Sitio, or Street keywords)"}
+    
+    Tier4 -->|Keyword Match| Res4["🔍 <b>Tier 4: Heuristic Text Regex Scanning</b><br/>Extract barangay or landmark name from raw string<br/>(isApprox = true)"]
+    Tier4 -->|Unresolved| Tier5["🎯 <b>Tier 5: Deterministic Town Center Offset</b><br/>Base: Bulan Municipal Center (12.666861, 123.875111)<br/>Hash seed offset applied (prevents pin overlapping)<br/>(isApprox = true)"]
+    
+    Res1 --> Output(["Resolved [Latitude, Longitude] Coordinate & Match Label"])
+    Res2 --> Output
+    Res3 --> Output
+    Res4 --> Output
+    Tier5 --> Output
+
+    style Start fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff
+    style Output fill:#16a34a,stroke:#15803d,stroke-width:2.5px,color:#ffffff
+    style Res1 fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style Res2 fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0c4a6e
+    style Res3 fill:#ede9fe,stroke:#7c3aed,stroke-width:1.5px,color:#4c1d95
+    style Res4 fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+    style Tier5 fill:#fee2e2,stroke:#dc2626,stroke-width:1.5px,color:#7f1d1d
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Formally specifies the innovative 5-tier address resolution algorithm implemented in <code>GeocodingService.php</code> and <code>bulanCoordinates.ts</code>. It solves the critical rural GIS challenge of non-standardized postal addresses in Bulan, Sorsogon by cascading through GPS coordinates, curated local landmarks, PhilAtlas-verified barangay centroids, regex string parsing, and a deterministic pseudo-random offset around the town center so map pins never vanish or overlap.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig410">flowchart TD
+    Start(["Input: Customer Delivery Address"]) --> Tier1{"1. Exact GPS Available?<br/>(lat != 0 and lng != 0)"}
+    
+    Tier1 -->|Yes| Res1["✅ <b>Tier 1: Exact GPS Coordinates</b><br/>Return provided device lat/lng<br/>(isApprox = false)"]
+    Tier1 -->|No| Tier2{"2. Landmark Field Provided?<br/>(Exact or substring match)"}
+    
+    Tier2 -->|Match Found| Res2["📍 <b>Tier 2: Bulan Landmark Lookup</b><br/>Match with BULAN_LANDMARKS_COORDS<br/>(e.g., SSU Bulan, Public Market, Freedom Park)<br/>(isApprox = true)"]
+    Tier2 -->|No Landmark| Tier3{"3. Barangay Field Provided?<br/>(Normalized string match)"}
+    
+    Tier3 -->|Match Found| Res3["🏘️ <b>Tier 3: Barangay Centroid Lookup</b><br/>Match with BULAN_BARANGAYS_COORDS<br/>(PhilAtlas verified coordinates for 63 Bulan Barangays)<br/>(isApprox = true)"]
+    Tier3 -->|No Barangay Match| Tier4{"4. Text Scanning in Address Line?<br/>(Purok, Sitio, or Street keywords)"}
+    
+    Tier4 -->|Keyword Match| Res4["🔍 <b>Tier 4: Heuristic Text Regex Scanning</b><br/>Extract barangay or landmark name from raw string<br/>(isApprox = true)"]
+    Tier4 -->|Unresolved| Tier5["🎯 <b>Tier 5: Deterministic Town Center Offset</b><br/>Base: Bulan Municipal Center (12.666861, 123.875111)<br/>Hash seed offset applied (prevents pin overlapping)<br/>(isApprox = true)"]
+    
+    Res1 --> Output(["Resolved [Latitude, Longitude] Coordinate & Match Label"])
+    Res2 --> Output
+    Res3 --> Output
+    Res4 --> Output
+    Tier5 --> Output
+
+    style Start fill:#0284c7,stroke:#0369a1,stroke-width:2px,color:#ffffff
+    style Output fill:#16a34a,stroke:#15803d,stroke-width:2.5px,color:#ffffff
+    style Res1 fill:#dcfce7,stroke:#16a34a,stroke-width:2px,color:#14532d
+    style Res2 fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0c4a6e
+    style Res3 fill:#ede9fe,stroke:#7c3aed,stroke-width:1.5px,color:#4c1d95
+    style Res4 fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#78350f
+    style Tier5 fill:#fee2e2,stroke:#dc2626,stroke-width:1.5px,color:#7f1d1d</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 11. Fig 4.11: Order State Machine -->
+    <section class="diagram-card" id="fig411">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🧺</span> Fig. 4.11: Laundry Order Lifecycle & Finite State Machine (FSM)</h2>
+          <p>State transition model illustrating all 12 order milestones, failure recovery paths, and terminal completion states</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig411', 'Fig_4_11_Order_State_Machine')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig411', 'Fig_4_11_Order_State_Machine')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig411')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig411">
+stateDiagram-v2
+    [*] --> pending: Customer Places Booking
+    pending --> cancelled: Customer Cancels before Shop Accept
+    pending --> declined: Shop Owner Declines (Capacity/Time)
+    pending --> confirmed: Shop Owner Accepts Booking
+
+    confirmed --> pickup_assigned: Shop Assigns Rider / Broadcast Accepted
+    pickup_assigned --> picking_up: Rider Arrives at Customer Location
+    picking_up --> pickup_failed: Customer Unreachable / Unavailable
+    pickup_failed --> pickup_assigned: Re-attempt Dispatch
+    pickup_failed --> cancelled: Exceeded Max Pickup Attempts
+
+    picking_up --> picked_up: Rider Collects Laundry & Uploads Photo Proof
+    picked_up --> delivered_to_shop: Rider Drops Laundry at Laundromat Hub
+
+    delivered_to_shop --> in_laundry: Weight & Price Confirmed, Cycle Starts
+    in_laundry --> processing: Washing & Tumbling
+    processing --> drying: Heat Drying & Sanitization
+    drying --> ready_for_delivery: Folded, Packaged & Tagged with Invoice
+
+    ready_for_delivery --> delivering: Rider Dispatched with Clean Laundry
+    delivering --> delivery_failed: Customer Unavailable at Delivery
+    delivery_failed --> return_confirmed: Returned to Shop Facility
+    return_confirmed --> delivering: Rescheduled Delivery Dispatch
+
+    delivering --> completed: Handover Package, Upload Proof & COD Paid
+    completed --> [*]
+    declined --> [*]
+    cancelled --> [*]
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Formulates the robust Finite State Machine (FSM) governing order integrity in Labada's backend. Demonstrates the strict linear workflow from initial booking to pickup, multi-stage laundry processing (wash, dry, fold), dispatch, delivery proof photo capture, COD collection, and resilient recovery handling for unsuccessful pickup or delivery attempts.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig411">stateDiagram-v2
+    [*] --> pending: Customer Places Booking
+    pending --> cancelled: Customer Cancels before Shop Accept
+    pending --> declined: Shop Owner Declines (Capacity/Time)
+    pending --> confirmed: Shop Owner Accepts Booking
+
+    confirmed --> pickup_assigned: Shop Assigns Rider / Broadcast Accepted
+    pickup_assigned --> picking_up: Rider Arrives at Customer Location
+    picking_up --> pickup_failed: Customer Unreachable / Unavailable
+    pickup_failed --> pickup_assigned: Re-attempt Dispatch
+    pickup_failed --> cancelled: Exceeded Max Pickup Attempts
+
+    picking_up --> picked_up: Rider Collects Laundry & Uploads Photo Proof
+    picked_up --> delivered_to_shop: Rider Drops Laundry at Laundromat Hub
+
+    delivered_to_shop --> in_laundry: Weight & Price Confirmed, Cycle Starts
+    in_laundry --> processing: Washing & Tumbling
+    processing --> drying: Heat Drying & Sanitization
+    drying --> ready_for_delivery: Folded, Packaged & Tagged with Invoice
+
+    ready_for_delivery --> delivering: Rider Dispatched with Clean Laundry
+    delivering --> delivery_failed: Customer Unavailable at Delivery
+    delivery_failed --> return_confirmed: Returned to Shop Facility
+    return_confirmed --> delivering: Rescheduled Delivery Dispatch
+
+    delivering --> completed: Handover Package, Upload Proof & COD Paid
+    completed --> [*]
+    declined --> [*]
+    cancelled --> [*]</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 12. Fig 4.12: Reverb WebSockets Telemetry -->
+    <section class="diagram-card" id="fig412">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>⚡</span> Fig. 4.12: Real-Time WebSocket Telemetry Sequence (Laravel Reverb & Echo)</h2>
+          <p>Sequence diagram illustrating low-latency GPS telemetry transmission, ETA computation, and private channel broadcasting</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig412', 'Fig_4_12_Reverb_WebSockets_Sequence')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig412', 'Fig_4_12_Reverb_WebSockets_Sequence')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig412')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig412">
+sequenceDiagram
+    autonumber
+    actor Rider as 🛵 Rider Device
+    participant API as 🛡️ Laravel API Gateway
+    participant Event as 📡 Event Broadcast
+    participant Reverb as ⚡ Laravel Reverb (WSS)
+    actor Customer as 📱 Customer App (Echo)
+
+    Note over Customer,Reverb: Customer listens on private channel: order.{id}
+    Customer->>API: Authenticate Channel (api/broadcasting/auth)
+    API-->>Customer: Grant Channel Authorization Token
+    Customer->>Reverb: WSS Subscribe (private-order.{orderId})
+    Reverb-->>Customer: Subscription Succeeded
+
+    loop Every 5-10 Seconds during Transit
+        Rider->>API: POST /api/orders/rider-location {lat, lng}
+        API->>API: Haversine Calc: distance_km & eta_minutes
+        API->>Event: dispatch(new RiderLocationUpdated(...))
+        Event->>Reverb: Broadcast to private-order.{orderId}
+        Reverb-->>Customer: Push Event: RiderLocationUpdated
+        Customer->>Customer: Smooth Map Pin Glide (Leaflet.js) & Update ETA Pill
+    end
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Documents the real-time event-driven communication architecture implemented through Laravel Reverb and Laravel Echo. Proves sub-second latency updates for customer tracking, secure token-authenticated private WebSocket channels, and intelligent client-side throttling to minimize battery drain and bandwidth usage during transit across Bulan.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig412">sequenceDiagram
+    autonumber
+    actor Rider as 🛵 Rider Device
+    participant API as 🛡️ Laravel API Gateway
+    participant Event as 📡 Event Broadcast
+    participant Reverb as ⚡ Laravel Reverb (WSS)
+    actor Customer as 📱 Customer App (Echo)
+
+    Note over Customer,Reverb: Customer listens on private channel: order.{id}
+    Customer->>API: Authenticate Channel (api/broadcasting/auth)
+    API-->>Customer: Grant Channel Authorization Token
+    Customer->>Reverb: WSS Subscribe (private-order.{orderId})
+    Reverb-->>Customer: Subscription Succeeded
+
+    loop Every 5-10 Seconds during Transit
+        Rider->>API: POST /api/orders/rider-location {lat, lng}
+        API->>API: Haversine Calc: distance_km & eta_minutes
+        API->>Event: dispatch(new RiderLocationUpdated(...))
+        Event->>Reverb: Broadcast to private-order.{orderId}
+        Reverb-->>Customer: Push Event: RiderLocationUpdated
+        Customer->>Customer: Smooth Map Pin Glide (Leaflet.js) & Update ETA Pill
+    end</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 13. Fig 4.13: Password Reset & OTP Flow -->
+    <section class="diagram-card" id="fig413">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🔐</span> Fig. 4.13: Password Reset & Authentication OTP Verification Flow</h2>
+          <p>Cryptographic One-Time Password verification protocol with 60-second throttling, 10-minute expiry, and single-use token lifecycle</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig413', 'Fig_4_13_OTP_Verification_Flow')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig413', 'Fig_4_13_OTP_Verification_Flow')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig413')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig413">
+sequenceDiagram
+    autonumber
+    actor User as 👤 Customer / Rider / Owner
+    participant App as 📱 Mobile App (ModalSheet)
+    participant API as 🛡️ Laravel Auth API
+    participant Mailer as ✉️ Titan SMTP Mail Server
+    participant DB as 🗄️ MySQL Database
+
+    User->>App: Clicks "Forgot Password?" & Inputs Email
+    App->>API: POST /api/forgot-password/send-otp {email}
+    API->>DB: Check User & Throttling (60s cooldown limit)
+    alt Rate Limit Exceeded (<60s)
+        API-->>App: HTTP 429 Too Many Requests (Remaining Seconds)
+        App-->>User: Display Cooldown Countdown Notice
+    else Valid Request
+        API->>API: Generate Cryptographic 6-Digit OTP
+        API->>DB: Store Hash & 10-Minute Expiry in password_reset_tokens
+        API->>Mailer: Send Email Notification with OTP
+        Mailer-->>User: Delivery of Verification Code to Inbox
+        API-->>App: HTTP 200 OK (OTP Sent)
+        App->>App: Start Persistent 60s Timer & Switch to Step 2
+    end
+
+    User->>App: Enters 6-Digit OTP
+    App->>API: POST /api/forgot-password/verify-otp {email, otp}
+    API->>DB: Verify Token Match & Timestamp < 10 mins
+    alt Invalid / Expired OTP
+        API-->>App: HTTP 422 Invalid / Expired Code
+        App-->>User: Show Error Banner & Re-prompt Code
+    else Correct OTP
+        API-->>App: HTTP 200 OK (Code Verified)
+        App->>App: Transition to Step 3: Password Entry
+    end
+
+    User->>App: Enters New Password & Confirmation
+    App->>API: POST /api/forgot-password/reset {email, otp, password, password_confirmation}
+    API->>API: Validate Password (min 8 chars) & Re-check OTP
+    API->>DB: Update user.password (Bcrypt hash) & Delete Used Token
+    API-->>App: HTTP 200 OK (Password Reset Successful)
+    App->>App: Clear Cooldown Cache & Close Modal
+    App-->>User: Display Success Toast & Prompt Login
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Demonstrates the ISO/IEC 25010 Security sub-characteristic implementation (confidentiality, integrity, non-repudiation). Details the multi-tier protection against automated brute-force attacks via server-side 60-second rate-limiting, transient SHA-256 token hashing, rapid 10-minute validity expiry, and atomic single-use invalidation upon password reset completion.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig413">sequenceDiagram
+    autonumber
+    actor User as 👤 Customer / Rider / Owner
+    participant App as 📱 Mobile App (ModalSheet)
+    participant API as 🛡️ Laravel Auth API
+    participant Mailer as ✉️ Titan SMTP Mail Server
+    participant DB as 🗄️ MySQL Database
+
+    User->>App: Clicks "Forgot Password?" & Inputs Email
+    App->>API: POST /api/forgot-password/send-otp {email}
+    API->>DB: Check User & Throttling (60s cooldown limit)
+    alt Rate Limit Exceeded (<60s)
+        API-->>App: HTTP 429 Too Many Requests (Remaining Seconds)
+        App-->>User: Display Cooldown Countdown Notice
+    else Valid Request
+        API->>API: Generate Cryptographic 6-Digit OTP
+        API->>DB: Store Hash & 10-Minute Expiry in password_reset_tokens
+        API->>Mailer: Send Email Notification with OTP
+        Mailer-->>User: Delivery of Verification Code to Inbox
+        API-->>App: HTTP 200 OK (OTP Sent)
+        App->>App: Start Persistent 60s Timer & Switch to Step 2
+    end
+
+    User->>App: Enters 6-Digit OTP
+    App->>API: POST /api/forgot-password/verify-otp {email, otp}
+    API->>DB: Verify Token Match & Timestamp < 10 mins
+    alt Invalid / Expired OTP
+        API-->>App: HTTP 422 Invalid / Expired Code
+        App-->>User: Show Error Banner & Re-prompt Code
+    else Correct OTP
+        API-->>App: HTTP 200 OK (Code Verified)
+        App->>App: Transition to Step 3: Password Entry
+    end
+
+    User->>App: Enters New Password & Confirmation
+    App->>API: POST /api/forgot-password/reset {email, otp, password, password_confirmation}
+    API->>API: Validate Password (min 8 chars) & Re-check OTP
+    API->>DB: Update user.password (Bcrypt hash) & Delete Used Token
+    API-->>App: HTTP 200 OK (Password Reset Successful)
+    App->>App: Clear Cooldown Cache & Close Modal
+    App-->>User: Display Success Toast & Prompt Login</pre>
         </details>
       </div>
     </section>
