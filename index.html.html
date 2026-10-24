@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LABADA System Diagrams Preview — Research Paper Figures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-light: #e0f2fe;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #38bdf8 100%);
+      color: white;
+      padding: 2.5rem 1.5rem 2rem;
+      box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.25);
+    }
+
+    .header-content {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.92;
+      max-width: 900px;
+    }
+
+    .authors-info {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+      opacity: 0.88;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    /* Sticky Navigation */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+      padding: 0.75rem 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .nav-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+      scrollbar-width: thin;
+    }
+
+    .nav-link {
+      white-space: nowrap;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: rgba(2, 132, 199, 0.2);
+    }
+
+    /* Layout */
+    .main-wrapper {
+      max-width: 1300px;
+      margin: 2rem auto 4rem;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .diagram-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .diagram-card:hover {
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: #fafafa;
+    }
+
+    .card-title-group h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title-group p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .card-body {
+      padding: 2rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffffff;
+      min-height: 380px;
+      overflow-x: auto;
+    }
+
+    .mermaid {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .card-footer {
+      padding: 1.25rem 1.75rem;
+      background: #f8fafc;
+      border-top: 1px solid var(--border);
+    }
+
+    .academic-note {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    .academic-note strong {
+      color: #0f172a;
+    }
+
+    details {
+      margin-top: 0.75rem;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      background: #f8fafc;
+    }
+
+    summary:hover {
+      color: var(--primary);
+    }
+
+    pre.source-code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 1rem;
+      background: #0f172a;
+      color: #e2e8f0;
+      overflow-x: auto;
+      max-height: 280px;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s ease;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 1.5rem; }
+      .header-content { text-align: left; }
+      .card-header { flex-direction: column; align-items: flex-start; }
+      .card-actions { width: 100%; justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="badge">Sorsogon State University — Bulan Campus</div>
+      <h1>LABADA: System Diagrams & Architecture</h1>
+      <p class="subtitle">A Map-Based Mobile Application for Laundry Shop in Bulan, Sorsogon (Chapter 4: Design & Methodologies)</p>
+      <div class="authors-info">
+        <div><strong>Researchers:</strong> Luigi Carl Brezuela, Emelson B. Gipa, Moses G. Gonzales, Ken G. Salazar</div>
+        <div><strong>College:</strong> Information & Communications Technology</div>
+        <div><strong>Status:</strong> Evaluated under ISO/IEC 25010:2023</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-container">
+      <a href="#fig41" class="nav-link">Fig 4.1: Architecture</a>
+      <a href="#fig42" class="nav-link">Fig 4.2: DFD Level 0</a>
+      <a href="#fig43" class="nav-link">Fig 4.3: DFD Level 1</a>
+      <a href="#fig44" class="nav-link">Fig 4.4: Use Case</a>
+      <a href="#fig45" class="nav-link">Fig 4.5: Admin Activity</a>
+      <a href="#fig46" class="nav-link">Fig 4.6: Owner Activity</a>
+      <a href="#fig47" class="nav-link">Fig 4.7: Rider Activity</a>
+      <a href="#fig48" class="nav-link">Fig 4.8: Customer Activity</a>
+      <a href="#fig49" class="nav-link">Fig 4.9: ERD</a>
+    </div>
+  </nav>
+
+  <main class="main-wrapper">
+
+    <!-- 1. Fig 4.1: Architecture -->
+    <section class="diagram-card" id="fig41">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🏛️</span> Fig. 4.1: System Architecture Diagram of Laundry Shop</h2>
+          <p>Multi-Layer System Architecture (User Layer, Mobile Application Layer, Cloud Backend Layer, Database & External Services Layer)</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig41', 'Fig_4_1_System_Architecture')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig41', 'Fig_4_1_System_Architecture')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig41')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig41">
+flowchart TB
+    %% ==============================================================
+    %% 1. USER LAYER (Stakeholders & Actors)
+    %% ==============================================================
+    subgraph Layer1 ["1. USER LAYER (System Stakeholders & Actors)"]
+        direction LR
+        U_Cust["👤 <b>Customer</b><br/>Order & Track"]
+        U_Rider["🛵 <b>Rider</b><br/>Pickup & Deliver"]
+        U_Owner["🏪 <b>Shop Owner</b><br/>Laundry Operations"]
+        U_Admin["🛡️ <b>Administrator</b><br/>Platform Oversight"]
+    end
+
+    %% ==============================================================
+    %% 2. MOBILE APPLICATION LAYER
+    %% ==============================================================
+    subgraph Layer2 ["2. MOBILE APPLICATION LAYER (React Native / Expo Client App)"]
+        direction TB
+        subgraph MobileModules ["Modular Client Interfaces"]
+            direction LR
+            M_Cust["<b>Customer App</b><br/>• Service Catalog<br/>• Booking & Cart<br/>• Live Order Tracking<br/>• In-App Chat"]
+            M_Rider["<b>Rider App</b><br/>• Paunahan Job Feeds<br/>• Turn-by-Turn GPS<br/>• Pickup/Dropoff Proof<br/>• Earnings & History"]
+            M_Owner["<b>Shop Owner Portal</b><br/>• Order Queue Board<br/>• Wash / Dry / Fold Ops<br/>• POS & Services Config<br/>• Remittance Records"]
+            M_Admin["<b>Admin Interface</b><br/>• Laundry Shop Audit<br/>• Rider Verification<br/>• Platform Metrics<br/>• System Audit Logs"]
+        end
+        ClientCore["⚙️ <b>Client Application Core:</b> Zustand State Engine • TanStack Query Cache • Laravel Echo (Reverb WSS Client)"]
+        MobileModules --- ClientCore
+    end
+
+    %% ==============================================================
+    %% 3. CLOUD APPLICATION LAYER (Laravel 13 Backend)
+    %% ==============================================================
+    subgraph Layer3 ["3. CLOUD APPLICATION LAYER (Laravel 13 Cloud Backend)"]
+        direction TB
+        
+        Gateway["🔐 <b>API Gateway & Security Layer</b><br/>RESTful HTTPS Reverse Proxy • Laravel Sanctum Bearer Auth • Role-Based Access Control (RBAC)"]
+
+        subgraph CoreEngines ["Core Business Logic Engines"]
+            direction LR
+            E_Order["🧺 <b>Order & Cycle Engine</b><br/>Queue → Wash → Dry<br/>Fold → Ready for Delivery"]
+            E_Dispatch["🚀 <b>Dispatch & Matching</b><br/>Paunahan Broadcast<br/>& Direct Assignment"]
+            E_Geo["📍 <b>Bulan Geocoding & GIS</b><br/>Haversine Distance Matrix<br/>& Barangay Boundary Grid"]
+            E_Notify["🔔 <b>Notification Engine</b><br/>FCM Background Push<br/>& In-App Event Alerts"]
+        end
+
+        Reverb["⚡ <b>Real-Time WebSocket Engine (Laravel Reverb)</b><br/>Sub-Second Live Rider GPS Tracking & Bi-Directional Order Status Broadcasts (WSS)"]
+
+        Gateway --> CoreEngines
+        CoreEngines <--> Reverb
+    end
+
+    %% ==============================================================
+    %% 4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER
+    %% ==============================================================
+    subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
+        direction LR
+        DB[("🗄️ <b>PostgreSQL Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
+        FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
+    end
+
+    %% ==============================================================
+    %% Inter-Tier Connections (Clean Vertical Flow)
+    %% ==============================================================
+    U_Cust --> M_Cust
+    U_Rider --> M_Rider
+    U_Owner --> M_Owner
+    U_Admin --> M_Admin
+
+    ClientCore ==> |"HTTPS Requests (REST API)"| Gateway
+    ClientCore <==> |"WSS WebSockets (Live GPS & Status)"| Reverb
+
+    CoreEngines --> |"Eloquent ORM"| DB
+    E_Geo -.-> |"Road Navigation"| OSM
+    E_Notify -.-> |"Push Triggers"| FCM
+
+    %% ==============================================================
+    %% Visual Styling (Cohesive Academic Theme)
+    %% ==============================================================
+    style Layer1 fill:#f0f9ff,stroke:#0284c7,stroke-width:2px,color:#0369a1
+    style Layer2 fill:#f5f3ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+    style Layer3 fill:#f8fafc,stroke:#334155,stroke-width:2px,color:#0f172a
+    style Layer4 fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46
+
+    style MobileModules fill:#ffffff,stroke:#ddd6fe,stroke-width:1px
+    style ClientCore fill:#ede9fe,stroke:#8b5cf6,stroke-width:1.5px,color:#4c1d95
+    style Gateway fill:#ffffff,stroke:#94a3b8,stroke-width:1.5px,color:#1e293b
+    style CoreEngines fill:#ffffff,stroke:#cbd5e1,stroke-width:1px
+    style Reverb fill:#eff6ff,stroke:#3b82f6,stroke-width:1.5px,color:#1d4ed8
+
+    style DB fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#065f46
+    style OSM fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#92400e
+    style FCM fill:#ffedd5,stroke:#ea580c,stroke-width:1.5px,color:#9a3412
+
+    classDef userCard fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0369a1
+    classDef appCard fill:#faf5ff,stroke:#c084fc,stroke-width:1.5px,color:#581c87
+    classDef engineCard fill:#f8fafc,stroke:#94a3b8,stroke-width:1.5px,color:#1e293b
+
+    class U_Cust,U_Rider,U_Owner,U_Admin userCard
+    class M_Cust,M_Rider,M_Owner,M_Admin appCard
+    class E_Order,E_Dispatch,E_Geo,E_Notify engineCard
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Formally implements the multi-layer system architecture described in Chapter 4 (Section 4.1, Figure 4.1). Bridges the User Layer, Mobile Application Layer (React Native/Expo), Cloud Layer (Laravel 13 Sanctum API Gateway, Core Business Engines & Reverb WebSockets), and the Data Persistence Layer (PostgreSQL, OSM/OSRM GIS, FCM) with strict top-to-bottom flow without visual clutter.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig41">flowchart TB
+    %% ==============================================================
+    %% 1. USER LAYER (Stakeholders & Actors)
+    %% ==============================================================
+    subgraph Layer1 ["1. USER LAYER (System Stakeholders & Actors)"]
+        direction LR
+        U_Cust["👤 <b>Customer</b><br/>Order & Track"]
+        U_Rider["🛵 <b>Rider</b><br/>Pickup & Deliver"]
+        U_Owner["🏪 <b>Shop Owner</b><br/>Laundry Operations"]
+        U_Admin["🛡️ <b>Administrator</b><br/>Platform Oversight"]
+    end
+
+    %% ==============================================================
+    %% 2. MOBILE APPLICATION LAYER
+    %% ==============================================================
+    subgraph Layer2 ["2. MOBILE APPLICATION LAYER (React Native / Expo Client App)"]
+        direction TB
+        subgraph MobileModules ["Modular Client Interfaces"]
+            direction LR
+            M_Cust["<b>Customer App</b><br/>• Service Catalog<br/>• Booking & Cart<br/>• Live Order Tracking<br/>• In-App Chat"]
+            M_Rider["<b>Rider App</b><br/>• Paunahan Job Feeds<br/>• Turn-by-Turn GPS<br/>• Pickup/Dropoff Proof<br/>• Earnings & History"]
+            M_Owner["<b>Shop Owner Portal</b><br/>• Order Queue Board<br/>• Wash / Dry / Fold Ops<br/>• POS & Services Config<br/>• Remittance Records"]
+            M_Admin["<b>Admin Interface</b><br/>• Laundry Shop Audit<br/>• Rider Verification<br/>• Platform Metrics<br/>• System Audit Logs"]
+        end
+        ClientCore["⚙️ <b>Client Application Core:</b> Zustand State Engine • TanStack Query Cache • Laravel Echo (Reverb WSS Client)"]
+        MobileModules --- ClientCore
+    end
+
+    %% ==============================================================
+    %% 3. CLOUD APPLICATION LAYER (Laravel 13 Backend)
+    %% ==============================================================
+    subgraph Layer3 ["3. CLOUD APPLICATION LAYER (Laravel 13 Cloud Backend)"]
+        direction TB
+        
+        Gateway["🔐 <b>API Gateway & Security Layer</b><br/>RESTful HTTPS Reverse Proxy • Laravel Sanctum Bearer Auth • Role-Based Access Control (RBAC)"]
+
+        subgraph CoreEngines ["Core Business Logic Engines"]
+            direction LR
+            E_Order["🧺 <b>Order & Cycle Engine</b><br/>Queue → Wash → Dry<br/>Fold → Ready for Delivery"]
+            E_Dispatch["🚀 <b>Dispatch & Matching</b><br/>Paunahan Broadcast<br/>& Direct Assignment"]
+            E_Geo["📍 <b>Bulan Geocoding & GIS</b><br/>Haversine Distance Matrix<br/>& Barangay Boundary Grid"]
+            E_Notify["🔔 <b>Notification Engine</b><br/>FCM Background Push<br/>& In-App Event Alerts"]
+        end
+
+        Reverb["⚡ <b>Real-Time WebSocket Engine (Laravel Reverb)</b><br/>Sub-Second Live Rider GPS Tracking & Bi-Directional Order Status Broadcasts (WSS)"]
+
+        Gateway --> CoreEngines
+        CoreEngines <--> Reverb
+    end
+
+    %% ==============================================================
+    %% 4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER
+    %% ==============================================================
+    subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
+        direction LR
+        DB[("🗄️ <b>PostgreSQL Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
+        FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
+    end
+
+    %% ==============================================================
+    %% Inter-Tier Connections (Clean Vertical Flow)
+    %% ==============================================================
+    U_Cust --> M_Cust
+    U_Rider --> M_Rider
+    U_Owner --> M_Owner
+    U_Admin --> M_Admin
+
+    ClientCore ==> |"HTTPS Requests (REST API)"| Gateway
+    ClientCore <==> |"WSS WebSockets (Live GPS & Status)"| Reverb
+
+    CoreEngines --> |"Eloquent ORM"| DB
+    E_Geo -.-> |"Road Navigation"| OSM
+    E_Notify -.-> |"Push Triggers"| FCM
+
+    %% ==============================================================
+    %% Visual Styling (Cohesive Academic Theme)
+    %% ==============================================================
+    style Layer1 fill:#f0f9ff,stroke:#0284c7,stroke-width:2px,color:#0369a1
+    style Layer2 fill:#f5f3ff,stroke:#7c3aed,stroke-width:2px,color:#5b21b6
+    style Layer3 fill:#f8fafc,stroke:#334155,stroke-width:2px,color:#0f172a
+    style Layer4 fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#065f46
+
+    style MobileModules fill:#ffffff,stroke:#ddd6fe,stroke-width:1px
+    style ClientCore fill:#ede9fe,stroke:#8b5cf6,stroke-width:1.5px,color:#4c1d95
+    style Gateway fill:#ffffff,stroke:#94a3b8,stroke-width:1.5px,color:#1e293b
+    style CoreEngines fill:#ffffff,stroke:#cbd5e1,stroke-width:1px
+    style Reverb fill:#eff6ff,stroke:#3b82f6,stroke-width:1.5px,color:#1d4ed8
+
+    style DB fill:#d1fae5,stroke:#059669,stroke-width:2px,color:#065f46
+    style OSM fill:#fef3c7,stroke:#d97706,stroke-width:1.5px,color:#92400e
+    style FCM fill:#ffedd5,stroke:#ea580c,stroke-width:1.5px,color:#9a3412
+
+    classDef userCard fill:#e0f2fe,stroke:#0284c7,stroke-width:1.5px,color:#0369a1
+    classDef appCard fill:#faf5ff,stroke:#c084fc,stroke-width:1.5px,color:#581c87
+    classDef engineCard fill:#f8fafc,stroke:#94a3b8,stroke-width:1.5px,color:#1e293b
+
+    class U_Cust,U_Rider,U_Owner,U_Admin userCard
+    class M_Cust,M_Rider,M_Owner,M_Admin appCard
+    class E_Order,E_Dispatch,E_Geo,E_Notify engineCard</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 2. Fig 4.2: DFD Level 0 -->
+    <section class="diagram-card" id="fig42">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🌐</span> Fig. 4.2: Context Flow Diagram Level 0</h2>
+          <p>Context-level data flows between Customer, Owner, Rider, Admin, and the central Labada engine</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig42', 'Fig_4_2_Context_Flow_Diagram_Level_0')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig42', 'Fig_4_2_Context_Flow_Diagram_Level_0')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig42')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig42">
+flowchart TB
+    %% Top Actors
+    subgraph TopActors [" "]
+        direction LR
+        Admin["🛡️ System Administrator"]
+        Owner["🧺 Laundry Shop Owner"]
+    end
+
+    %% Central Process
+    System(["<b>0.0 LABADA SYSTEM</b><br/>Centralized Laundry Pickup, Processing,<br/>Delivery & Management Platform"])
+
+    %% Bottom Actors
+    subgraph BottomActors [" "]
+        direction LR
+        Customer["🧑 Customer Entity"]
+        Rider["🛵 Delivery Rider"]
+    end
+
+    %% Enforce vertical hierarchy
+    Admin ~~~ System
+    Owner ~~~ System
+    System ~~~ Customer
+    System ~~~ Rider
+
+    %% Admin Data Flows
+    Admin -->|• Login<br/>• Accept service request| System
+    System -->|• Admin Console access<br/>• Audit & System reports| Admin
+
+    %% Owner Data Flows
+    Owner -->|• Login / Sign up<br/>• Laundry status updates| System
+
+    %% Customer Data Flows
+    Customer -->|• Sign up / Login<br/>• Service request management<br/>• Reviews & Feedback| System
+    System -->|• Delivery / Pickup services<br/>• Laundry & Delivery status<br/>• Map location & Route tracking| Customer
+
+    %% Rider Data Flows
+    Rider -->|• Rider Login<br/>• Delivery status updates| System
+    System -->|• Laundry task status<br/>• Map location & Navigation<br/>• Delivery assignment details| Rider
+
+    %% Styling
+    classDef admin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef owner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+    classDef client fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef rider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    classDef system fill:#0284C7,stroke:#0369A1,stroke-width:3px,color:#FFFFFF,font-weight:bold;
+    classDef transparentBox fill:none,stroke:none;
+
+    class Admin admin;
+    class Owner owner;
+    class Customer client;
+    class Rider rider;
+    class System system;
+    class TopActors,BottomActors transparentBox;
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Formally adheres to Yourdon/DeMarco Level 0 context specifications (Figure 4.2, p. 19). Places the central 0.0 Labada System at the core with high-level data inflows and outflows mapped symmetrically to the external entities without visual clutter or unreadable micro-text.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig42">flowchart TB
+    %% Top Actors
+    subgraph TopActors [" "]
+        direction LR
+        Admin["🛡️ System Administrator"]
+        Owner["🧺 Laundry Shop Owner"]
+    end
+
+    %% Central Process
+    System(["<b>0.0 LABADA SYSTEM</b><br/>Centralized Laundry Pickup, Processing,<br/>Delivery & Management Platform"])
+
+    %% Bottom Actors
+    subgraph BottomActors [" "]
+        direction LR
+        Customer["🧑 Customer Entity"]
+        Rider["🛵 Delivery Rider"]
+    end
+
+    %% Enforce vertical hierarchy
+    Admin ~~~ System
+    Owner ~~~ System
+    System ~~~ Customer
+    System ~~~ Rider
+
+    %% Admin Data Flows
+    Admin -->|• Login<br/>• Accept service request| System
+    System -->|• Admin Console access<br/>• Audit & System reports| Admin
+
+    %% Owner Data Flows
+    Owner -->|• Login / Sign up<br/>• Laundry status updates| System
+
+    %% Customer Data Flows
+    Customer -->|• Sign up / Login<br/>• Service request management<br/>• Reviews & Feedback| System
+    System -->|• Delivery / Pickup services<br/>• Laundry & Delivery status<br/>• Map location & Route tracking| Customer
+
+    %% Rider Data Flows
+    Rider -->|• Rider Login<br/>• Delivery status updates| System
+    System -->|• Laundry task status<br/>• Map location & Navigation<br/>• Delivery assignment details| Rider
+
+    %% Styling
+    classDef admin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef owner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+    classDef client fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef rider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    classDef system fill:#0284C7,stroke:#0369A1,stroke-width:3px,color:#FFFFFF,font-weight:bold;
+    classDef transparentBox fill:none,stroke:none;
+
+    class Admin admin;
+    class Owner owner;
+    class Customer client;
+    class Rider rider;
+    class System system;
+    class TopActors,BottomActors transparentBox;</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 3. Fig 4.3: DFD Level 1 -->
+    <section class="diagram-card" id="fig43">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>📊</span> Fig. 4.3: Data Flow Diagram Level 1</h2>
+          <p>Functional decomposition of 7 major sub-processes and 7 persistent data stores</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig43', 'Fig_4_3_Data_Flow_Diagram_Level_1')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig43', 'Fig_4_3_Data_Flow_Diagram_Level_1')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig43')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig43">
+flowchart LR
+    %% Left Column: Customer & Admin
+    subgraph LeftEntities [" "]
+        direction TB
+        Customer["🧑 CUSTOMER<br/>(Client App)"]
+        Admin["🛡️ SYSTEM ADMIN<br/>(Admin Portal)"]
+    end
+
+    %% Center Column: 8 Core Functions matching Research Paper Fig. 4.3
+    subgraph CoreProcesses ["CORE SYSTEM PROCESSES (LEVEL 1)"]
+        direction TB
+        P1(["1.0 Login & Authentication"])
+        P2(["2.0 Service Request Management"])
+        P3(["3.0 Delivery Schedules"])
+        P4(["4.0 Map Location & Routing"])
+        P5(["5.0 Laundry Status Tracking"])
+        P6(["6.0 Chat Communication"])
+        P7(["7.0 Reviews & Feedback"])
+        P8(["8.0 Account Management"])
+    end
+
+    %% Right Column: Rider & Shop Owner
+    subgraph RightEntities [" "]
+        direction TB
+        Rider["🛵 DELIVERY RIDER<br/>(Rider App)"]
+        Owner["🧺 LAUNDRY SHOP OWNER<br/>(Owner Portal)"]
+    end
+
+    %% Customer Flows
+    Customer -->|Authentication| P1
+    Customer -->|Book Laundry Order| P2
+    Customer -->|View Pickup/Delivery Time| P3
+    Customer -->|Pin Landmark & GPS Location| P4
+    Customer -->|Monitor Laundry Progress| P5
+    Customer -->|Direct In-App Messages| P6
+    Customer -->|Submit Ratings & Reviews| P7
+
+    %% Admin Flows
+    Admin -->|Admin Login| P1
+    Admin -->|CRUD Management & Approvals| P8
+    Admin -->|Monitor Quality & Reports| P7
+
+    %% Rider Flows
+    Rider -->|Rider Login| P1
+    Rider -->|Accept Delivery Tasks| P3
+    Rider -->|View Navigation & Customer Pin| P4
+    Rider -->|Update Delivery Status| P5
+    Rider -->|Chat with Customer / Shop| P6
+
+    %% Owner Flows
+    Owner -->|Owner Login & Sign Up| P1
+    Owner -->|Manage Service Requests| P2
+    Owner -->|Assign Delivery Schedules| P3
+    Owner -->|Update Laundry Processing Status| P5
+    Owner -->|Chat with Customer / Rider| P6
+    Owner -->|Manage Services & Shop Account| P8
+
+    %% Styling
+    classDef client fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef admin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef process fill:#F0FDF4,stroke:#16A34A,stroke-width:2px,color:#15803D,font-weight:600;
+    classDef rider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    classDef owner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+
+    class Customer client;
+    class Admin admin;
+    class P1,P2,P3,P4,P5,P6,P7,P8 process;
+    class Rider rider;
+    class Owner owner;
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Directly reflects the 8 functional core subsystems outlined in the research methodology (Figure 4.3), mapping all four actors (Customer, Admin, Rider, Owner) directly to the specific functional interactions they perform without visual clutter.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig43">flowchart LR
+    %% Left Column: Customer & Admin
+    subgraph LeftEntities [" "]
+        direction TB
+        Customer["🧑 CUSTOMER<br/>(Client App)"]
+        Admin["🛡️ SYSTEM ADMIN<br/>(Admin Portal)"]
+    end
+
+    %% Center Column: 8 Core Functions matching Research Paper Fig. 4.3
+    subgraph CoreProcesses ["CORE SYSTEM PROCESSES (LEVEL 1)"]
+        direction TB
+        P1(["1.0 Login & Authentication"])
+        P2(["2.0 Service Request Management"])
+        P3(["3.0 Delivery Schedules"])
+        P4(["4.0 Map Location & Routing"])
+        P5(["5.0 Laundry Status Tracking"])
+        P6(["6.0 Chat Communication"])
+        P7(["7.0 Reviews & Feedback"])
+        P8(["8.0 Account Management"])
+    end
+
+    %% Right Column: Rider & Shop Owner
+    subgraph RightEntities [" "]
+        direction TB
+        Rider["🛵 DELIVERY RIDER<br/>(Rider App)"]
+        Owner["🧺 LAUNDRY SHOP OWNER<br/>(Owner Portal)"]
+    end
+
+    %% Customer Flows
+    Customer -->|Authentication| P1
+    Customer -->|Book Laundry Order| P2
+    Customer -->|View Pickup/Delivery Time| P3
+    Customer -->|Pin Landmark & GPS Location| P4
+    Customer -->|Monitor Laundry Progress| P5
+    Customer -->|Direct In-App Messages| P6
+    Customer -->|Submit Ratings & Reviews| P7
+
+    %% Admin Flows
+    Admin -->|Admin Login| P1
+    Admin -->|CRUD Management & Approvals| P8
+    Admin -->|Monitor Quality & Reports| P7
+
+    %% Rider Flows
+    Rider -->|Rider Login| P1
+    Rider -->|Accept Delivery Tasks| P3
+    Rider -->|View Navigation & Customer Pin| P4
+    Rider -->|Update Delivery Status| P5
+    Rider -->|Chat with Customer / Shop| P6
+
+    %% Owner Flows
+    Owner -->|Owner Login & Sign Up| P1
+    Owner -->|Manage Service Requests| P2
+    Owner -->|Assign Delivery Schedules| P3
+    Owner -->|Update Laundry Processing Status| P5
+    Owner -->|Chat with Customer / Rider| P6
+    Owner -->|Manage Services & Shop Account| P8
+
+    %% Styling
+    classDef client fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef admin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef process fill:#F0FDF4,stroke:#16A34A,stroke-width:2px,color:#15803D,font-weight:600;
+    classDef rider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    classDef owner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+
+    class Customer client;
+    class Admin admin;
+    class P1,P2,P3,P4,P5,P6,P7,P8 process;
+    class Rider rider;
+    class Owner owner;</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 4. Fig 4.4: Use Case -->
+    <section class="diagram-card" id="fig44">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🎯</span> Fig. 4.4: Use Case Diagram for Laundry Shop</h2>
+          <p>UML 2.5 Use Case model capturing interactions, includes, and extends for all actors</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig44', 'Fig_4_4_Use_Case_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig44', 'Fig_4_4_Use_Case_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig44')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig44">
+flowchart LR
+    subgraph SystemBoundary ["LABADA SYSTEM BOUNDARY"]
+        direction LR
+
+        subgraph PrimaryModules ["PRIMARY ACTOR USE CASES"]
+            direction TB
+
+            subgraph AdminSection ["Admin Management Module"]
+                direction TB
+                Admin["🛡️ SYSTEM ADMIN"]
+                UC_Admin1(["Create Shop Owner Account"])
+                UC_Admin2(["Manage Users"])
+                UC_Admin3(["View System Reports"])
+                Admin --- UC_Admin1
+                Admin --- UC_Admin2
+                Admin --- UC_Admin3
+            end
+
+            subgraph CustomerSection ["Customer Operations Module"]
+                direction TB
+                Customer["🧑 CUSTOMER"]
+                UC_Reg(["Register Account"])
+                UC_CustLogin(["Login"])
+                UC_Pickup(["Request Pickup"])
+                UC_Track(["Track Status"])
+                UC_Feedback(["Feedback & Rate"])
+                UC_History(["View History"])
+                UC_Pay(["Pay on Delivery"])
+                Customer --- UC_Reg
+                Customer --- UC_CustLogin
+                Customer --- UC_Pickup
+                Customer --- UC_Track
+                Customer --- UC_Feedback
+                Customer --- UC_History
+                Customer --- UC_Pay
+            end
+
+            subgraph OwnerSection ["Shop Owner Operations Module"]
+                direction TB
+                Owner["🧺 SHOP OWNER"]
+                UC_OwnerLogin(["Login"])
+                UC_ManagePricing(["Manage Services/Pricing"])
+                UC_ManageCust(["Manage Customer"])
+                UC_MonitorOrders(["Monitor Orders"])
+                UC_TrackRider(["Track Rider"])
+                Owner --- UC_OwnerLogin
+                Owner --- UC_ManagePricing
+                Owner --- UC_ManageCust
+                Owner --- UC_MonitorOrders
+                Owner --- UC_TrackRider
+            end
+
+            subgraph RiderSection ["Rider Delivery Module"]
+                direction TB
+                Rider["🛵 DELIVERY RIDER"]
+                UC_ViewPickups(["View Pickups"])
+                UC_Navigate(["Navigate"])
+                UC_ConfirmPickup(["Confirm Pickup"])
+                UC_ContactCust(["Contact Customer"])
+                UC_Deliver(["Deliver"])
+                Rider --- UC_ViewPickups
+                Rider --- UC_Navigate
+                Rider --- UC_ConfirmPickup
+                Rider --- UC_ContactCust
+                Rider --- UC_Deliver
+            end
+        end
+
+        subgraph SubFunctions ["INCLUDED & EXTENDED SUB-FUNCTIONS"]
+            direction TB
+            UC_VerifyPass(["Verify Password"])
+            UC_DisplayErr(["Display Error"])
+            UC_VerifyAddr(["Verify Address"])
+            UC_SelectServ(["Select Services"])
+            UC_Schedule(["Schedule"])
+            UC_CancelPickup(["Cancel Pickup Request"])
+            UC_RecvNotif(["Receive Notification"])
+            UC_UpdateStatus(["Update Laundry Status"])
+            UC_CollectCOD(["Collect COD"])
+        end
+    end
+
+    %% Stereotype Dependencies
+    UC_CustLogin -.->|&lt;&lt;include&gt;&gt;| UC_VerifyPass
+    UC_CustLogin -.->|&lt;&lt;extend&gt;&gt;| UC_DisplayErr
+    UC_OwnerLogin -.->|&lt;&lt;include&gt;&gt;| UC_VerifyPass
+    UC_OwnerLogin -.->|&lt;&lt;extend&gt;&gt;| UC_DisplayErr
+
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_VerifyAddr
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_SelectServ
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_Schedule
+    UC_Pickup -.->|&lt;&lt;extend&gt;&gt;| UC_CancelPickup
+
+    UC_Track -.->|&lt;&lt;extend&gt;&gt;| UC_RecvNotif
+
+    UC_Deliver -.->|&lt;&lt;include&gt;&gt;| UC_UpdateStatus
+    UC_Deliver -.->|&lt;&lt;include&gt;&gt;| UC_CollectCOD
+
+    %% Styling
+    classDef actorAdmin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef actorCust fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef actorOwner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+    classDef actorRider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    
+    classDef primaryUC fill:#FFFFFF,stroke:#0284C7,stroke-width:2px,color:#0F172A,font-weight:600;
+    classDef subUC fill:#F0FDF4,stroke:#16A34A,stroke-width:2px,color:#15803D,font-weight:600;
+    classDef moduleCard fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px,color:#1E293B,font-weight:bold;
+    classDef boundary fill:#FFFFFF,stroke:#0284C7,stroke-width:2.5px,stroke-dasharray: 6 3,color:#0369A1,font-weight:bold;
+
+    class Admin actorAdmin;
+    class Customer actorCust;
+    class Owner actorOwner;
+    class Rider actorRider;
+
+    class UC_Admin1,UC_Admin2,UC_Admin3,UC_Reg,UC_CustLogin,UC_Pickup,UC_Track,UC_Feedback,UC_History,UC_Pay primaryUC;
+    class UC_OwnerLogin,UC_ManagePricing,UC_ManageCust,UC_MonitorOrders,UC_TrackRider primaryUC;
+    class UC_ViewPickups,UC_Navigate,UC_ConfirmPickup,UC_ContactCust,UC_Deliver primaryUC;
+
+    class UC_VerifyPass,UC_DisplayErr,UC_VerifyAddr,UC_SelectServ,UC_Schedule,UC_CancelPickup,UC_RecvNotif,UC_UpdateStatus,UC_CollectCOD subUC;
+
+    class AdminSection,CustomerSection,OwnerSection,RiderSection,SubFunctions,PrimaryModules moduleCard;
+    class SystemBoundary boundary;
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Faithfully reproduces Figure 4.4 of the research methodology (p. 21). Outlines all 4 primary system actors (Admin, Customer, Shop Owner, Rider) across their respective functional modules, explicitly specifying mandatory UML reuse relations (<code>&lt;&lt;include&gt;&gt;</code>) and optional/conditional branch flows (<code>&lt;&lt;extend&gt;&gt;</code>) including credential verification, address validation, service selection, pickup scheduling, order cancellation, push notification reception, and COD delivery settlement.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig44">flowchart LR
+    subgraph SystemBoundary ["LABADA SYSTEM BOUNDARY"]
+        direction LR
+
+        subgraph PrimaryModules ["PRIMARY ACTOR USE CASES"]
+            direction TB
+
+            subgraph AdminSection ["Admin Management Module"]
+                direction TB
+                Admin["🛡️ SYSTEM ADMIN"]
+                UC_Admin1(["Create Shop Owner Account"])
+                UC_Admin2(["Manage Users"])
+                UC_Admin3(["View System Reports"])
+                Admin --- UC_Admin1
+                Admin --- UC_Admin2
+                Admin --- UC_Admin3
+            end
+
+            subgraph CustomerSection ["Customer Operations Module"]
+                direction TB
+                Customer["🧑 CUSTOMER"]
+                UC_Reg(["Register Account"])
+                UC_CustLogin(["Login"])
+                UC_Pickup(["Request Pickup"])
+                UC_Track(["Track Status"])
+                UC_Feedback(["Feedback & Rate"])
+                UC_History(["View History"])
+                UC_Pay(["Pay on Delivery"])
+                Customer --- UC_Reg
+                Customer --- UC_CustLogin
+                Customer --- UC_Pickup
+                Customer --- UC_Track
+                Customer --- UC_Feedback
+                Customer --- UC_History
+                Customer --- UC_Pay
+            end
+
+            subgraph OwnerSection ["Shop Owner Operations Module"]
+                direction TB
+                Owner["🧺 SHOP OWNER"]
+                UC_OwnerLogin(["Login"])
+                UC_ManagePricing(["Manage Services/Pricing"])
+                UC_ManageCust(["Manage Customer"])
+                UC_MonitorOrders(["Monitor Orders"])
+                UC_TrackRider(["Track Rider"])
+                Owner --- UC_OwnerLogin
+                Owner --- UC_ManagePricing
+                Owner --- UC_ManageCust
+                Owner --- UC_MonitorOrders
+                Owner --- UC_TrackRider
+            end
+
+            subgraph RiderSection ["Rider Delivery Module"]
+                direction TB
+                Rider["🛵 DELIVERY RIDER"]
+                UC_ViewPickups(["View Pickups"])
+                UC_Navigate(["Navigate"])
+                UC_ConfirmPickup(["Confirm Pickup"])
+                UC_ContactCust(["Contact Customer"])
+                UC_Deliver(["Deliver"])
+                Rider --- UC_ViewPickups
+                Rider --- UC_Navigate
+                Rider --- UC_ConfirmPickup
+                Rider --- UC_ContactCust
+                Rider --- UC_Deliver
+            end
+        end
+
+        subgraph SubFunctions ["INCLUDED & EXTENDED SUB-FUNCTIONS"]
+            direction TB
+            UC_VerifyPass(["Verify Password"])
+            UC_DisplayErr(["Display Error"])
+            UC_VerifyAddr(["Verify Address"])
+            UC_SelectServ(["Select Services"])
+            UC_Schedule(["Schedule"])
+            UC_CancelPickup(["Cancel Pickup Request"])
+            UC_RecvNotif(["Receive Notification"])
+            UC_UpdateStatus(["Update Laundry Status"])
+            UC_CollectCOD(["Collect COD"])
+        end
+    end
+
+    %% Stereotype Dependencies
+    UC_CustLogin -.->|&lt;&lt;include&gt;&gt;| UC_VerifyPass
+    UC_CustLogin -.->|&lt;&lt;extend&gt;&gt;| UC_DisplayErr
+    UC_OwnerLogin -.->|&lt;&lt;include&gt;&gt;| UC_VerifyPass
+    UC_OwnerLogin -.->|&lt;&lt;extend&gt;&gt;| UC_DisplayErr
+
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_VerifyAddr
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_SelectServ
+    UC_Pickup -.->|&lt;&lt;include&gt;&gt;| UC_Schedule
+    UC_Pickup -.->|&lt;&lt;extend&gt;&gt;| UC_CancelPickup
+
+    UC_Track -.->|&lt;&lt;extend&gt;&gt;| UC_RecvNotif
+
+    UC_Deliver -.->|&lt;&lt;include&gt;&gt;| UC_UpdateStatus
+    UC_Deliver -.->|&lt;&lt;include&gt;&gt;| UC_CollectCOD
+
+    %% Styling
+    classDef actorAdmin fill:#FEF3C7,stroke:#D97706,stroke-width:2.5px,color:#92400E,font-weight:bold;
+    classDef actorCust fill:#E0F2FE,stroke:#0284C7,stroke-width:2.5px,color:#0369A1,font-weight:bold;
+    classDef actorOwner fill:#FFE4E6,stroke:#E11D48,stroke-width:2.5px,color:#9F1239,font-weight:bold;
+    classDef actorRider fill:#F3E8FF,stroke:#9333EA,stroke-width:2.5px,color:#6B21A8,font-weight:bold;
+    
+    classDef primaryUC fill:#FFFFFF,stroke:#0284C7,stroke-width:2px,color:#0F172A,font-weight:600;
+    classDef subUC fill:#F0FDF4,stroke:#16A34A,stroke-width:2px,color:#15803D,font-weight:600;
+    classDef moduleCard fill:#F8FAFC,stroke:#CBD5E1,stroke-width:1.5px,color:#1E293B,font-weight:bold;
+    classDef boundary fill:#FFFFFF,stroke:#0284C7,stroke-width:2.5px,stroke-dasharray: 6 3,color:#0369A1,font-weight:bold;
+
+    class Admin actorAdmin;
+    class Customer actorCust;
+    class Owner actorOwner;
+    class Rider actorRider;
+
+    class UC_Admin1,UC_Admin2,UC_Admin3,UC_Reg,UC_CustLogin,UC_Pickup,UC_Track,UC_Feedback,UC_History,UC_Pay primaryUC;
+    class UC_OwnerLogin,UC_ManagePricing,UC_ManageCust,UC_MonitorOrders,UC_TrackRider primaryUC;
+    class UC_ViewPickups,UC_Navigate,UC_ConfirmPickup,UC_ContactCust,UC_Deliver primaryUC;
+
+    class UC_VerifyPass,UC_DisplayErr,UC_VerifyAddr,UC_SelectServ,UC_Schedule,UC_CancelPickup,UC_RecvNotif,UC_UpdateStatus,UC_CollectCOD subUC;
+
+    class AdminSection,CustomerSection,OwnerSection,RiderSection,SubFunctions,PrimaryModules moduleCard;
+    class SystemBoundary boundary;</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 5. Fig 4.5: Admin Activity -->
+    <section class="diagram-card" id="fig45">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🛡️</span> Fig. 4.5: Admin Activity Diagram of the Laundry Shop</h2>
+          <p>Full administrative governance: reviewing pending laundry shop permits in Bulan, user management, live GIS monitoring, and ISO/IEC 25010 academic analytics.</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig45', 'Fig_4_5_Admin_Activity_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig45', 'Fig_4_5_Admin_Activity_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig45')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig45">
+flowchart TD
+    StartNode(( )) --> VisitLogin["Visit Admin Web Portal"]
+    VisitLogin --> InputCreds["Enter Admin Credentials"]
+    InputCreds --> CheckAuth{Credentials Valid?}
+
+    CheckAuth -->|No| AuthFail{"Retry or Reset?"}
+    AuthFail -->|Retry| InputCreds
+    AuthFail -->|Forgot Password| ResetPass["Reset Admin Password"]
+    ResetPass --> InputCreds
+
+    CheckAuth -->|Yes| AdminConsole["🛡️ <b>Admin Dashboard</b>"]
+
+    subgraph SEC_SHOPS ["🏪 Shop Accreditation & Governance"]
+        AdminConsole --> ReviewPermits["Review Pending Laundry Shops"]
+        ReviewPermits --> InspectDocs["Inspect DTI & Mayor's Permits"]
+        InspectDocs --> DocDecision{Permits Valid?}
+        DocDecision -->|Deficient| RejectShop["Reject Shop & Send Notice"]
+        DocDecision -->|Approved| ApproveShop["Approve Shop & Enable Operations"]
+    end
+
+    subgraph SEC_USERS ["👥 User Account Governance"]
+        AdminConsole --> ManageUsers["Manage User Accounts"]
+        ManageUsers --> FilterUsers["Filter Customers, Owners & Riders"]
+        FilterUsers --> AccountAction["Activate, Suspend or Audit Account"]
+    end
+
+    subgraph SEC_MONITOR ["📡 Live Monitoring & Dispatch"]
+        AdminConsole --> LiveMonitoring["Live Bulan GIS Operations Map"]
+        LiveMonitoring --> TrackMetrics["Monitor Order Volumes & Active Riders"]
+    end
+
+    subgraph SEC_EVAL ["📊 ISO/IEC 25010 Analytics"]
+        AdminConsole --> LoadEvaluations["Fetch ISO Usability Survey Data"]
+        LoadEvaluations --> ComputeMeans["Compute Mean Scores for Metrics"]
+        ComputeMeans --> ExportReport["Export Analytics for Research Paper"]
+    end
+
+    RejectShop --> EndFork[ ]
+    ApproveShop --> EndFork
+    AccountAction --> EndFork
+    TrackMetrics --> EndFork
+    ExportReport --> EndFork
+
+    EndFork --> Logout["Admin Logout / Revoke Token"]
+    Logout --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style AdminConsole fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e
+    style EndFork fill:#334155,stroke:#1e293b,stroke-width:2px
+    style CheckAuth fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style AuthFail fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style DocDecision fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class VisitLogin,InputCreds,ResetPass,ReviewPermits,InspectDocs,RejectShop,ApproveShop,ManageUsers,FilterUsers,AccountAction,LiveMonitoring,TrackMetrics,LoadEvaluations,ComputeMeans,ExportReport,Logout actNode
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Represents the complete operational scope of the Platform Administrator in the Labada system. Captures authentication, laundry shop accreditation via DTI and Mayor's permit verification, cross-role user governance, live Bulan operations monitoring, and empirical ISO/IEC 25010 usability data aggregation.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig45">flowchart TD
+    StartNode(( )) --> VisitLogin["Visit Admin Web Portal"]
+    VisitLogin --> InputCreds["Enter Admin Credentials"]
+    InputCreds --> CheckAuth{Credentials Valid?}
+
+    CheckAuth -->|No| AuthFail{"Retry or Reset?"}
+    AuthFail -->|Retry| InputCreds
+    AuthFail -->|Forgot Password| ResetPass["Reset Admin Password"]
+    ResetPass --> InputCreds
+
+    CheckAuth -->|Yes| AdminConsole["🛡️ <b>Admin Dashboard</b>"]
+
+    subgraph SEC_SHOPS ["🏪 Shop Accreditation & Governance"]
+        AdminConsole --> ReviewPermits["Review Pending Laundry Shops"]
+        ReviewPermits --> InspectDocs["Inspect DTI & Mayor's Permits"]
+        InspectDocs --> DocDecision{Permits Valid?}
+        DocDecision -->|Deficient| RejectShop["Reject Shop & Send Notice"]
+        DocDecision -->|Approved| ApproveShop["Approve Shop & Enable Operations"]
+    end
+
+    subgraph SEC_USERS ["👥 User Account Governance"]
+        AdminConsole --> ManageUsers["Manage User Accounts"]
+        ManageUsers --> FilterUsers["Filter Customers, Owners & Riders"]
+        FilterUsers --> AccountAction["Activate, Suspend or Audit Account"]
+    end
+
+    subgraph SEC_MONITOR ["📡 Live Monitoring & Dispatch"]
+        AdminConsole --> LiveMonitoring["Live Bulan GIS Operations Map"]
+        LiveMonitoring --> TrackMetrics["Monitor Order Volumes & Active Riders"]
+    end
+
+    subgraph SEC_EVAL ["📊 ISO/IEC 25010 Analytics"]
+        AdminConsole --> LoadEvaluations["Fetch ISO Usability Survey Data"]
+        LoadEvaluations --> ComputeMeans["Compute Mean Scores for Metrics"]
+        ComputeMeans --> ExportReport["Export Analytics for Research Paper"]
+    end
+
+    RejectShop --> EndFork[ ]
+    ApproveShop --> EndFork
+    AccountAction --> EndFork
+    TrackMetrics --> EndFork
+    ExportReport --> EndFork
+
+    EndFork --> Logout["Admin Logout / Revoke Token"]
+    Logout --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style AdminConsole fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#92400e
+    style EndFork fill:#334155,stroke:#1e293b,stroke-width:2px
+    style CheckAuth fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style AuthFail fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style DocDecision fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class VisitLogin,InputCreds,ResetPass,ReviewPermits,InspectDocs,RejectShop,ApproveShop,ManageUsers,FilterUsers,AccountAction,LiveMonitoring,TrackMetrics,LoadEvaluations,ComputeMeans,ExportReport,Logout actNode</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 6. Fig 4.6: Owner Activity -->
+    <section class="diagram-card" id="fig46">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🧺</span> Fig. 4.6: Owner Activity Diagram of the Laundry Shop</h2>
+          <p>End-to-end laundromat operations: shop profile & supply management, booking approval/rejection, rider dispatching (dedicated vs broadcast), multi-stage laundry cycle, and COD cash reconciliation.</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig46', 'Fig_4_6_Owner_Activity_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig46', 'Fig_4_6_Owner_Activity_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig46')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig46">
+flowchart TD
+    StartNode(( )) --> ForkAuth[ ]
+    
+    ForkAuth --> LoginPath["Login to Owner Portal"]
+    LoginPath --> InputCreds["Email & Password"]
+    InputCreds --> AuthCheck{Credentials Valid?}
+    AuthCheck -->|No| InputCreds
+    AuthCheck -->|Yes| OwnerHub["🧺 <b>Owner Dashboard</b>"]
+
+    ForkAuth --> RegPath["Register New Laundry Shop"]
+    RegPath --> SubmitDocs["Upload DTI & Business Permits"]
+    SubmitDocs --> AwaitAdmin["Await Admin Verification"]
+    AwaitAdmin --> OwnerHub
+
+    subgraph SEC_STORE ["⚙️ Shop Profile & Catalog Setup"]
+        OwnerHub --> ConfigShop["Configure Operating Hours & Services"]
+        ConfigShop --> SetPrices["Set Price per Kilo & Inventory Stock"]
+    end
+
+    subgraph SEC_ORDERS ["📋 Order Intake & Dispatch"]
+        OwnerHub --> RecvOrder["Receive Customer Booking Alert"]
+        RecvOrder --> OrderDecision{Capacity Available?}
+        OrderDecision -->|No| DeclineOrder["Decline Order with Reason"]
+        OrderDecision -->|Yes| AcceptOrder["Accept Order Booking"]
+        AcceptOrder --> DispatchStrategy{"Select Dispatch Strategy"}
+        DispatchStrategy -->|Daily Dedicated| AssignDaily["Assign Dedicated Daily Rider"]
+        DispatchStrategy -->|Broadcast Pool| BroadcastJob["Broadcast Job to Nearby Riders"]
+    end
+
+    subgraph SEC_WASH ["🌀 In-Shop Laundry Lifecycle"]
+        AssignDaily --> RecvLaundry["Receive Laundry from Pickup Rider"]
+        BroadcastJob --> RecvLaundry
+        RecvLaundry --> WeighConfirm["Weigh Exact Kilos & Confirm Price"]
+        WeighConfirm --> WashCycle["Washing Cycle"]
+        WashCycle --> DryCycle["Drying Cycle"]
+        DryCycle --> FoldPackage["Folding, Tagging & Packaging"]
+        FoldPackage --> MarkReady["Status: Ready for Delivery"]
+    end
+
+    subgraph SEC_DELIVERY ["🚚 Delivery & Cash Settlement"]
+        MarkReady --> DispatchDelivery["Assign Rider for Delivery"]
+        DispatchDelivery --> AwaitCustomer["Rider Delivers to Customer"]
+        AwaitCustomer --> RecvRemit["Rider Remits Collected COD Cash"]
+        RecvRemit --> VerifyCash["Verify Remittance vs Invoice"]
+        VerifyCash --> CompleteOrder["Mark Order Completed & Paid"]
+    end
+
+    DeclineOrder --> EndFork[ ]
+    CompleteOrder --> EndFork
+    EndFork --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkAuth fill:#334155,stroke:#1e293b,stroke-width:2px
+    style EndFork fill:#334155,stroke:#1e293b,stroke-width:2px
+    style OwnerHub fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#9f1239
+    style AuthCheck fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style OrderDecision fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style DispatchStrategy fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginPath,InputCreds,RegPath,SubmitDocs,AwaitAdmin,ConfigShop,SetPrices,RecvOrder,DeclineOrder,AcceptOrder,AssignDaily,BroadcastJob,RecvLaundry,WeighConfirm,WashCycle,DryCycle,FoldPackage,MarkReady,DispatchDelivery,AwaitCustomer,RecvRemit,VerifyCash,CompleteOrder actNode
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Details the complete lifecycle of a Laundry Shop Owner in Labada. Encompasses shop onboarding and document submission, service pricing and detergent stock configuration, order intake decision trees, dual-mode rider dispatching, in-house washing/drying/folding phases, and end-of-order Cash-on-Delivery remittance reconciliation.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig46">flowchart TD
+    StartNode(( )) --> ForkAuth[ ]
+    
+    ForkAuth --> LoginPath["Login to Owner Portal"]
+    LoginPath --> InputCreds["Email & Password"]
+    InputCreds --> AuthCheck{Credentials Valid?}
+    AuthCheck -->|No| InputCreds
+    AuthCheck -->|Yes| OwnerHub["🧺 <b>Owner Dashboard</b>"]
+
+    ForkAuth --> RegPath["Register New Laundry Shop"]
+    RegPath --> SubmitDocs["Upload DTI & Business Permits"]
+    SubmitDocs --> AwaitAdmin["Await Admin Verification"]
+    AwaitAdmin --> OwnerHub
+
+    subgraph SEC_STORE ["⚙️ Shop Profile & Catalog Setup"]
+        OwnerHub --> ConfigShop["Configure Operating Hours & Services"]
+        ConfigShop --> SetPrices["Set Price per Kilo & Inventory Stock"]
+    end
+
+    subgraph SEC_ORDERS ["📋 Order Intake & Dispatch"]
+        OwnerHub --> RecvOrder["Receive Customer Booking Alert"]
+        RecvOrder --> OrderDecision{Capacity Available?}
+        OrderDecision -->|No| DeclineOrder["Decline Order with Reason"]
+        OrderDecision -->|Yes| AcceptOrder["Accept Order Booking"]
+        AcceptOrder --> DispatchStrategy{"Select Dispatch Strategy"}
+        DispatchStrategy -->|Daily Dedicated| AssignDaily["Assign Dedicated Daily Rider"]
+        DispatchStrategy -->|Broadcast Pool| BroadcastJob["Broadcast Job to Nearby Riders"]
+    end
+
+    subgraph SEC_WASH ["🌀 In-Shop Laundry Lifecycle"]
+        AssignDaily --> RecvLaundry["Receive Laundry from Pickup Rider"]
+        BroadcastJob --> RecvLaundry
+        RecvLaundry --> WeighConfirm["Weigh Exact Kilos & Confirm Price"]
+        WeighConfirm --> WashCycle["Washing Cycle"]
+        WashCycle --> DryCycle["Drying Cycle"]
+        DryCycle --> FoldPackage["Folding, Tagging & Packaging"]
+        FoldPackage --> MarkReady["Status: Ready for Delivery"]
+    end
+
+    subgraph SEC_DELIVERY ["🚚 Delivery & Cash Settlement"]
+        MarkReady --> DispatchDelivery["Assign Rider for Delivery"]
+        DispatchDelivery --> AwaitCustomer["Rider Delivers to Customer"]
+        AwaitCustomer --> RecvRemit["Rider Remits Collected COD Cash"]
+        RecvRemit --> VerifyCash["Verify Remittance vs Invoice"]
+        VerifyCash --> CompleteOrder["Mark Order Completed & Paid"]
+    end
+
+    DeclineOrder --> EndFork[ ]
+    CompleteOrder --> EndFork
+    EndFork --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkAuth fill:#334155,stroke:#1e293b,stroke-width:2px
+    style EndFork fill:#334155,stroke:#1e293b,stroke-width:2px
+    style OwnerHub fill:#ffe4e6,stroke:#e11d48,stroke-width:2px,color:#9f1239
+    style AuthCheck fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style OrderDecision fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style DispatchStrategy fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginPath,InputCreds,RegPath,SubmitDocs,AwaitAdmin,ConfigShop,SetPrices,RecvOrder,DeclineOrder,AcceptOrder,AssignDaily,BroadcastJob,RecvLaundry,WeighConfirm,WashCycle,DryCycle,FoldPackage,MarkReady,DispatchDelivery,AwaitCustomer,RecvRemit,VerifyCash,CompleteOrder actNode</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 7. Fig 4.7: Rider Activity -->
+    <section class="diagram-card" id="fig47">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🛵</span> Fig. 4.7: Rider Activity Diagram of the Laundry Shop</h2>
+          <p>Delivery courier lifecycle: duty shift activation, live GPS streaming (5s interval), job offer acceptance, OSRM waypoint navigation, photo proof of pickup/delivery, and COD cash remittance.</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig47', 'Fig_4_7_Rider_Activity_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig47', 'Fig_4_7_Rider_Activity_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig47')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig47">
+flowchart TD
+    StartNode(( )) --> ForkRider[ ]
+
+    subgraph SEC_PREP ["1. Authentication & Telemetry"]
+        ForkRider --> LoginRider["Login to Rider App"]
+        ForkRider --> RegRider["Courier Registration"]
+        LoginRider --> AuthCheck{Valid?}
+        RegRider --> SubmitLicense["Submit License & Vehicle Info"]
+        AuthCheck -->|Yes| ToggleOnline["Toggle Shift Status: Online"]
+        AuthCheck -->|No| LoginRider
+        SubmitLicense --> ToggleOnline
+        ToggleOnline --> StreamGPS["Stream Live GPS Coordinates (5s interval)"]
+    end
+
+    subgraph SEC_DISPATCH ["2. Dispatch & Pickup Operations"]
+        StreamGPS --> RecvOffer["Receive Job Offer Modal Alert"]
+        RecvOffer --> ReviewOffer["Inspect Customer Pin & Delivery Fee"]
+        ReviewOffer --> OfferChoice{Accept?}
+        OfferChoice -->|Decline / Timeout| StreamGPS
+        OfferChoice -->|Accept Job| LockOrder["Status: pickup_assigned"]
+        LockOrder --> NavCustomer["Navigate via OSRM to Customer Pin"]
+        NavCustomer --> CollectBag["Collect Customer Laundry Bag"]
+        CollectBag --> UploadPickupProof["Upload Photo Proof of Pickup"]
+        UploadPickupProof --> TurnoverShop["Turnover Bag: delivered_to_shop"]
+    end
+
+    subgraph SEC_DELIVERY ["3. Delivery & Remittance"]
+        TurnoverShop --> RecvDeliveryAlert["Receive Delivery Dispatch Notification"]
+        RecvDeliveryAlert --> CollectClean["Collect Packaged Clean Laundry"]
+        CollectClean --> NavDelivery["Navigate to Customer Address"]
+        NavDelivery --> HandoverCust["Handover Clean Laundry to Customer"]
+        HandoverCust --> UploadDelivProof["Upload Photo Proof of Delivery"]
+        UploadDelivProof --> CollectCash["Collect COD Cash Amount"]
+        CollectCash --> ReturnShop["Return to Laundry Shop"]
+        ReturnShop --> RemitCash["Remit Collected Cash to Owner"]
+        RemitCash --> ToggleOffline["Toggle Shift Status: Offline"]
+    end
+
+    ToggleOffline --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkRider fill:#334155,stroke:#1e293b,stroke-width:2px
+    style AuthCheck fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style OfferChoice fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginRider,RegRider,SubmitLicense,ToggleOnline,StreamGPS,RecvOffer,ReviewOffer,LockOrder,NavCustomer,CollectBag,UploadPickupProof,TurnoverShop,RecvDeliveryAlert,CollectClean,NavDelivery,HandoverCust,UploadDelivProof,CollectCash,ReturnShop,RemitCash,ToggleOffline actNode
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Models the full field operations of Delivery Personnel. Spans duty shift toggling with live GPS tracking, audio-modal dispatch offer acceptance, OSRM turn-by-turn routing to customer locations in Bulan, photo proof uploads for pickup and clean delivery, cash collection, and final cash turnover to the laundry shop owner.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig47">flowchart TD
+    StartNode(( )) --> ForkRider[ ]
+
+    subgraph SEC_PREP ["1. Authentication & Telemetry"]
+        ForkRider --> LoginRider["Login to Rider App"]
+        ForkRider --> RegRider["Courier Registration"]
+        LoginRider --> AuthCheck{Valid?}
+        RegRider --> SubmitLicense["Submit License & Vehicle Info"]
+        AuthCheck -->|Yes| ToggleOnline["Toggle Shift Status: Online"]
+        AuthCheck -->|No| LoginRider
+        SubmitLicense --> ToggleOnline
+        ToggleOnline --> StreamGPS["Stream Live GPS Coordinates (5s interval)"]
+    end
+
+    subgraph SEC_DISPATCH ["2. Dispatch & Pickup Operations"]
+        StreamGPS --> RecvOffer["Receive Job Offer Modal Alert"]
+        RecvOffer --> ReviewOffer["Inspect Customer Pin & Delivery Fee"]
+        ReviewOffer --> OfferChoice{Accept?}
+        OfferChoice -->|Decline / Timeout| StreamGPS
+        OfferChoice -->|Accept Job| LockOrder["Status: pickup_assigned"]
+        LockOrder --> NavCustomer["Navigate via OSRM to Customer Pin"]
+        NavCustomer --> CollectBag["Collect Customer Laundry Bag"]
+        CollectBag --> UploadPickupProof["Upload Photo Proof of Pickup"]
+        UploadPickupProof --> TurnoverShop["Turnover Bag: delivered_to_shop"]
+    end
+
+    subgraph SEC_DELIVERY ["3. Delivery & Remittance"]
+        TurnoverShop --> RecvDeliveryAlert["Receive Delivery Dispatch Notification"]
+        RecvDeliveryAlert --> CollectClean["Collect Packaged Clean Laundry"]
+        CollectClean --> NavDelivery["Navigate to Customer Address"]
+        NavDelivery --> HandoverCust["Handover Clean Laundry to Customer"]
+        HandoverCust --> UploadDelivProof["Upload Photo Proof of Delivery"]
+        UploadDelivProof --> CollectCash["Collect COD Cash Amount"]
+        CollectCash --> ReturnShop["Return to Laundry Shop"]
+        ReturnShop --> RemitCash["Remit Collected Cash to Owner"]
+        RemitCash --> ToggleOffline["Toggle Shift Status: Offline"]
+    end
+
+    ToggleOffline --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkRider fill:#334155,stroke:#1e293b,stroke-width:2px
+    style AuthCheck fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    style OfferChoice fill:#f8fafc,stroke:#64748b,stroke-width:1.5px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginRider,RegRider,SubmitLicense,ToggleOnline,StreamGPS,RecvOffer,ReviewOffer,LockOrder,NavCustomer,CollectBag,UploadPickupProof,TurnoverShop,RecvDeliveryAlert,CollectClean,NavDelivery,HandoverCust,UploadDelivProof,CollectCash,ReturnShop,RemitCash,ToggleOffline actNode</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8. Fig 4.8: Customer Activity -->
+    <section class="diagram-card" id="fig48">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>📱</span> Fig. 4.8: Customer Activity Diagram of the Laundry Shop</h2>
+          <p>End-to-end customer journey: Bulan map pinning, browsing local shops, customized service/supply configuration, live pickup tracking via WebSockets, delivery inspection, and ISO 25010 survey.</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig48', 'Fig_4_8_Customer_Activity_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig48', 'Fig_4_8_Customer_Activity_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig48')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig48">
+flowchart TD
+    StartNode(( )) --> ForkCust[ ]
+
+    subgraph SEC_ADDR ["1. Account & Bulan Location Pinning"]
+        ForkCust --> LoginCust["Login (Email/Password or Google SSO)"]
+        ForkCust --> SignUpCust["Create New Account"]
+        LoginCust --> PinMap["Pin Exact Address on Bulan Map"]
+        SignUpCust --> PinMap
+        PinMap --> SelectBarangay["Select Barangay, Purok & Landmark"]
+        SelectBarangay --> SaveAddress["Save as Default Delivery Address"]
+    end
+
+    subgraph SEC_BOOKING ["2. Shop Selection & Order Customization"]
+        SaveAddress --> BrowseShops["Browse Registered Bulan Laundry Shops"]
+        BrowseShops --> SelectShop["Select Shop & Inspect Reviews"]
+        SelectShop --> ChooseService["Select Service: Wash / Dry / Fold"]
+        ChooseService --> SelectSupplies["Select Detergent & Fabric Softener"]
+        SelectSupplies --> EstimateWeight["Input Estimated Kilos"]
+        EstimateWeight --> ReviewTotal["Review Service Cost & Delivery Fee"]
+        ReviewTotal --> ChooseCOD["Select Payment Method: COD"]
+        ChooseCOD --> SubmitBooking["Submit Order: Status pending"]
+    end
+
+    subgraph SEC_TRACKING ["3. Live Tracking & Fulfillment"]
+        SubmitBooking --> AwaitConfirm["Shop Confirms Booking"]
+        AwaitConfirm --> TrackPickup["Track Pickup Rider Live on Map via Echo"]
+        TrackPickup --> HandoverLaundry["Handover Laundry Bag to Rider"]
+        HandoverLaundry --> TrackProcessing["Monitor In-Shop Washing & Drying"]
+        TrackProcessing --> TrackDelivery["Track Clean Delivery Rider Live on Map"]
+    end
+
+    subgraph SEC_COMPLETE ["4. Delivery Inspection & Usability Survey"]
+        TrackDelivery --> ReceiveLaundry["Receive & Inspect Clean Laundry Package"]
+        ReceiveLaundry --> PayCODCash["Pay Exact Bill Amount in Cash (COD)"]
+        PayCODCash --> RecvReceipt["Order Marked Completed"]
+        RecvReceipt --> RateShop["Rate Laundry Shop (1-5 Stars & Comment)"]
+        RateShop --> RateRider["Rate Delivery Rider Quality"]
+        RateRider --> CompleteSurvey["Fill ISO/IEC 25010 Usability Survey"]
+    end
+
+    CompleteSurvey --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkCust fill:#334155,stroke:#1e293b,stroke-width:2px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginCust,SignUpCust,PinMap,SelectBarangay,SaveAddress,BrowseShops,SelectShop,ChooseService,SelectSupplies,EstimateWeight,ReviewTotal,ChooseCOD,SubmitBooking,AwaitConfirm,TrackPickup,HandoverLaundry,TrackProcessing,TrackDelivery,ReceiveLaundry,PayCODCash,RecvReceipt,RateShop,RateRider,CompleteSurvey actNode
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Illustrates the entire digital experience of Customers using the Labada mobile application. Details account setup, geographic coordinate pinning with Bulan barangay and landmark data, granular order tailoring (detergents, softeners, estimated weight), real-time courier tracking via Laravel Echo/Reverb, delivery inspection, and academic usability feedback submission.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig48">flowchart TD
+    StartNode(( )) --> ForkCust[ ]
+
+    subgraph SEC_ADDR ["1. Account & Bulan Location Pinning"]
+        ForkCust --> LoginCust["Login (Email/Password or Google SSO)"]
+        ForkCust --> SignUpCust["Create New Account"]
+        LoginCust --> PinMap["Pin Exact Address on Bulan Map"]
+        SignUpCust --> PinMap
+        PinMap --> SelectBarangay["Select Barangay, Purok & Landmark"]
+        SelectBarangay --> SaveAddress["Save as Default Delivery Address"]
+    end
+
+    subgraph SEC_BOOKING ["2. Shop Selection & Order Customization"]
+        SaveAddress --> BrowseShops["Browse Registered Bulan Laundry Shops"]
+        BrowseShops --> SelectShop["Select Shop & Inspect Reviews"]
+        SelectShop --> ChooseService["Select Service: Wash / Dry / Fold"]
+        ChooseService --> SelectSupplies["Select Detergent & Fabric Softener"]
+        SelectSupplies --> EstimateWeight["Input Estimated Kilos"]
+        EstimateWeight --> ReviewTotal["Review Service Cost & Delivery Fee"]
+        ReviewTotal --> ChooseCOD["Select Payment Method: COD"]
+        ChooseCOD --> SubmitBooking["Submit Order: Status pending"]
+    end
+
+    subgraph SEC_TRACKING ["3. Live Tracking & Fulfillment"]
+        SubmitBooking --> AwaitConfirm["Shop Confirms Booking"]
+        AwaitConfirm --> TrackPickup["Track Pickup Rider Live on Map via Echo"]
+        TrackPickup --> HandoverLaundry["Handover Laundry Bag to Rider"]
+        HandoverLaundry --> TrackProcessing["Monitor In-Shop Washing & Drying"]
+        TrackProcessing --> TrackDelivery["Track Clean Delivery Rider Live on Map"]
+    end
+
+    subgraph SEC_COMPLETE ["4. Delivery Inspection & Usability Survey"]
+        TrackDelivery --> ReceiveLaundry["Receive & Inspect Clean Laundry Package"]
+        ReceiveLaundry --> PayCODCash["Pay Exact Bill Amount in Cash (COD)"]
+        PayCODCash --> RecvReceipt["Order Marked Completed"]
+        RecvReceipt --> RateShop["Rate Laundry Shop (1-5 Stars & Comment)"]
+        RateShop --> RateRider["Rate Delivery Rider Quality"]
+        RateRider --> CompleteSurvey["Fill ISO/IEC 25010 Usability Survey"]
+    end
+
+    CompleteSurvey --> EndNode((( )))
+
+    style StartNode fill:#0284c7,stroke:#0369a1,stroke-width:2px
+    style EndNode fill:#0f172a,stroke:#64748b,stroke-width:3px
+    style ForkCust fill:#334155,stroke:#1e293b,stroke-width:2px
+    classDef actNode fill:#ffffff,stroke:#0284c7,stroke-width:1.5px,color:#0f172a
+    class LoginCust,SignUpCust,PinMap,SelectBarangay,SaveAddress,BrowseShops,SelectShop,ChooseService,SelectSupplies,EstimateWeight,ReviewTotal,ChooseCOD,SubmitBooking,AwaitConfirm,TrackPickup,HandoverLaundry,TrackProcessing,TrackDelivery,ReceiveLaundry,PayCODCash,RecvReceipt,RateShop,RateRider,CompleteSurvey actNode</pre>
+        </details>
+      </div>
+    </section>
+
+    <!-- 9. Fig 4.9: ERD -->
+    <section class="diagram-card" id="fig49">
+      <div class="card-header">
+        <div class="card-title-group">
+          <h2><span>🗄️</span> Fig. 4.9: Entity-Relationships Diagram of the Laundry Shop (ERD)</h2>
+          <p>Complete Relational Database Architecture (14 Normalized Tables: Users, Shops, Services, Supplies, Riders, Shop-Rider, Addresses, Orders, Payments, COD Remittances, Feedback, Chat, Notifications, Evaluations)</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn btn-primary" onclick="downloadSvg('chart-fig49', 'Fig_4_9_Entity_Relationships_Diagram')">Download SVG</button>
+          <button class="btn" onclick="downloadPng('chart-fig49', 'Fig_4_9_Entity_Relationships_Diagram')">Download PNG</button>
+          <button class="btn" onclick="copyMermaid('code-fig49')">Copy Code</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="mermaid" id="chart-fig49">
+erDiagram
+    USERS ||--o{ ADDRESSES : "registers"
+    USERS ||--o| SHOPS : "owns"
+    USERS ||--o| RIDERS : "operates"
+    USERS ||--o{ ORDERS : "places"
+    USERS ||--o{ NOTIFICATIONS : "receives"
+    USERS ||--o{ SYSTEM_EVALUATIONS : "submits"
+
+    SHOPS ||--o{ SHOP_SERVICES : "offers"
+    SHOPS ||--o{ SHOP_SUPPLIES : "stocks"
+    SHOPS ||--o{ SHOP_RIDER : "contracts"
+    SHOPS ||--o{ ORDERS : "fulfills"
+    SHOPS ||--o{ COD_REMITTANCES : "receives"
+
+    RIDERS ||--o{ SHOP_RIDER : "joins"
+    RIDERS ||--o{ ORDERS : "delivers"
+    RIDERS ||--o{ COD_REMITTANCES : "submits"
+
+    ADDRESSES ||--o{ ORDERS : "locates"
+    ORDERS ||--|| PAYMENTS : "billed_by"
+    ORDERS ||--o| FEEDBACK : "evaluated_by"
+    ORDERS ||--o{ CHAT_MESSAGES : "contains"
+
+    USERS {
+        int id PK
+        string name
+        string email
+        string phone
+        string role
+        string status
+    }
+    SHOPS {
+        int id PK
+        int user_id FK
+        string name
+        string address
+        boolean is_approved
+        boolean is_active
+    }
+    SHOP_SERVICES {
+        int id PK
+        int shop_id FK
+        string name
+        decimal price
+        decimal min_kilos
+        decimal max_kilos
+    }
+    SHOP_SUPPLIES {
+        int id PK
+        int shop_id FK
+        string name
+        string category
+        decimal price
+        int stock_quantity
+    }
+    RIDERS {
+        int id PK
+        int user_id FK
+        string vehicle_type
+        string plate_number
+        string status
+        boolean is_online
+    }
+    SHOP_RIDER {
+        int id PK
+        int shop_id FK
+        int rider_id FK
+        string status
+        string employment_type
+        decimal daily_rate
+    }
+    ADDRESSES {
+        int id PK
+        int user_id FK
+        string label
+        string barangay
+        string landmark
+        boolean is_default
+    }
+    ORDERS {
+        int id PK
+        string order_number
+        int customer_id FK
+        int shop_id FK
+        int rider_id FK
+        int pickup_address_id FK
+        string status
+        decimal weight_kg
+        decimal total_amount
+    }
+    PAYMENTS {
+        int id PK
+        int order_id FK
+        string method
+        decimal amount
+        string status
+        string reference_number
+    }
+    COD_REMITTANCES {
+        int id PK
+        int rider_id FK
+        int shop_id FK
+        decimal total_amount
+        string status
+    }
+    FEEDBACK {
+        int id PK
+        int order_id FK
+        int customer_id FK
+        int shop_rating
+        int rider_rating
+        string comment
+    }
+    CHAT_MESSAGES {
+        int id PK
+        int order_id FK
+        int sender_id FK
+        int receiver_id FK
+        string message
+    }
+    NOTIFICATIONS {
+        int id PK
+        int user_id FK
+        string title
+        string message
+        boolean is_read
+    }
+    SYSTEM_EVALUATIONS {
+        int id PK
+        int user_id FK
+        string user_category
+        decimal overall_mean
+    }
+        </div>
+      </div>
+      <div class="card-footer">
+        <p class="academic-note">
+          <strong>Methodological Significance:</strong> Formulates the comprehensive 14-table relational database architecture powering the Labada platform. Represents all primary keys (PK), foreign keys (FK), and business cardinalities encompassing multi-role users, laundry catalog configurations, geolocation coordinates, order fulfillment pipelines, COD remittance tracking, in-app messaging, and ISO/IEC 25010 research metrics.
+        </p>
+        <details>
+          <summary>View Raw Mermaid Source</summary>
+          <pre class="source-code" id="code-fig49">erDiagram
+    USERS ||--o{ ADDRESSES : "registers"
+    USERS ||--o| SHOPS : "owns"
+    USERS ||--o| RIDERS : "operates"
+    USERS ||--o{ ORDERS : "places"
+    USERS ||--o{ NOTIFICATIONS : "receives"
+    USERS ||--o{ SYSTEM_EVALUATIONS : "submits"
+
+    SHOPS ||--o{ SHOP_SERVICES : "offers"
+    SHOPS ||--o{ SHOP_SUPPLIES : "stocks"
+    SHOPS ||--o{ SHOP_RIDER : "contracts"
+    SHOPS ||--o{ ORDERS : "fulfills"
+    SHOPS ||--o{ COD_REMITTANCES : "receives"
+
+    RIDERS ||--o{ SHOP_RIDER : "joins"
+    RIDERS ||--o{ ORDERS : "delivers"
+    RIDERS ||--o{ COD_REMITTANCES : "submits"
+
+    ADDRESSES ||--o{ ORDERS : "locates"
+    ORDERS ||--|| PAYMENTS : "billed_by"
+    ORDERS ||--o| FEEDBACK : "evaluated_by"
+    ORDERS ||--o{ CHAT_MESSAGES : "contains"
+
+    USERS {
+        int id PK
+        string name
+        string email
+        string phone
+        string role
+        string status
+    }
+    SHOPS {
+        int id PK
+        int user_id FK
+        string name
+        string address
+        boolean is_approved
+        boolean is_active
+    }
+    SHOP_SERVICES {
+        int id PK
+        int shop_id FK
+        string name
+        decimal price
+        decimal min_kilos
+        decimal max_kilos
+    }
+    SHOP_SUPPLIES {
+        int id PK
+        int shop_id FK
+        string name
+        string category
+        decimal price
+        int stock_quantity
+    }
+    RIDERS {
+        int id PK
+        int user_id FK
+        string vehicle_type
+        string plate_number
+        string status
+        boolean is_online
+    }
+    SHOP_RIDER {
+        int id PK
+        int shop_id FK
+        int rider_id FK
+        string status
+        string employment_type
+        decimal daily_rate
+    }
+    ADDRESSES {
+        int id PK
+        int user_id FK
+        string label
+        string barangay
+        string landmark
+        boolean is_default
+    }
+    ORDERS {
+        int id PK
+        string order_number
+        int customer_id FK
+        int shop_id FK
+        int rider_id FK
+        int pickup_address_id FK
+        string status
+        decimal weight_kg
+        decimal total_amount
+    }
+    PAYMENTS {
+        int id PK
+        int order_id FK
+        string method
+        decimal amount
+        string status
+        string reference_number
+    }
+    COD_REMITTANCES {
+        int id PK
+        int rider_id FK
+        int shop_id FK
+        decimal total_amount
+        string status
+    }
+    FEEDBACK {
+        int id PK
+        int order_id FK
+        int customer_id FK
+        int shop_rating
+        int rider_rating
+        string comment
+    }
+    CHAT_MESSAGES {
+        int id PK
+        int order_id FK
+        int sender_id FK
+        int receiver_id FK
+        string message
+    }
+    NOTIFICATIONS {
+        int id PK
+        int user_id FK
+        string title
+        string message
+        boolean is_read
+    }
+    SYSTEM_EVALUATIONS {
+        int id PK
+        int user_id FK
+        string user_category
+        decimal overall_mean
+    }</pre>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast">Copied to clipboard!</div>
+
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'default',
+      securityLevel: 'loose',
+      fontFamily: 'Plus Jakarta Sans, sans-serif',
+      themeVariables: {
+        primaryColor: '#e0f2fe',
+        primaryTextColor: '#0369a1',
+        primaryBorderColor: '#0284c7',
+        lineColor: '#64748b',
+        secondaryColor: '#fef3c7',
+        tertiaryColor: '#f1f5f9'
+      }
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    function copyMermaid(elementId) {
+      const code = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('✓ Mermaid code copied to clipboard!');
+      }).catch(err => {
+        console.error(err);
+      });
+    }
+
+    function downloadSvg(containerId, filename) {
+      const container = document.getElementById(containerId);
+      const svg = container.querySelector('svg');
+      if (!svg) {
+        showToast('Error: Diagram SVG not ready yet.');
+        return;
+      }
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename + '.svg';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('✓ SVG file downloaded!');
+    }
+
+    function downloadPng(containerId, filename) {
+      const container = document.getElementById(containerId);
+      const svg = container.querySelector('svg');
+      if (!svg) {
+        showToast('Error: Diagram not ready yet.');
+        return;
+      }
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+      const img = new Image();
+
+      img.onload = function() {
+        const scale = 2.5; // High-resolution for academic prints
+        const bbox = svg.getBoundingClientRect();
+        const width = (bbox.width || 1200) * scale;
+        const height = (bbox.height || 800) * scale;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+
+        URL.revokeObjectURL(url);
+        const pngUrl = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = pngUrl;
+        a.download = filename + '.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        showToast('✓ High-Res PNG downloaded!');
+      };
+
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
