@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     :root {
       --primary: #0284c7;
@@ -2347,9 +2348,18 @@ sequenceDiagram
       });
     }
 
+    function triggerDownload(href, filename) {
+      const a = document.createElement('a');
+      a.href = href;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
     function downloadSvg(containerId, filename) {
       const container = document.getElementById(containerId);
-      const svg = container.querySelector('svg');
+      const svg = container ? container.querySelector('svg') : null;
       if (!svg) {
         showToast('Error: Diagram SVG not ready yet.');
         return;
@@ -2357,54 +2367,122 @@ sequenceDiagram
       const svgData = new XMLSerializer().serializeToString(svg);
       const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename + '.svg';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      triggerDownload(url, filename + '.svg');
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
       showToast('✓ SVG file downloaded!');
     }
 
-    function downloadPng(containerId, filename) {
+    async function downloadPng(containerId, filename) {
       const container = document.getElementById(containerId);
-      const svg = container.querySelector('svg');
+      const svg = container ? container.querySelector('svg') : null;
       if (!svg) {
         showToast('Error: Diagram not ready yet.');
         return;
       }
-      const svgData = new XMLSerializer().serializeToString(svg);
-      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-      const url = URL.createObjectURL(svgBlob);
-      const img = new Image();
 
-      img.onload = function() {
-        const scale = 2.5; // High-resolution for academic prints
-        const bbox = svg.getBoundingClientRect();
-        const width = (bbox.width || 1200) * scale;
-        const height = (bbox.height || 800) * scale;
+      showToast('Rendering high-res PNG...');
 
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
+      // Helper to attempt rendering SVG to canvas via Image object with explicit dimensions
+      const attemptSvgToCanvas = () => {
+        return new Promise((resolve, reject) => {
+          try {
+            const clonedSvg = svg.cloneNode(true);
+            clonedSvg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            clonedSvg.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
 
-        URL.revokeObjectURL(url);
-        const pngUrl = canvas.toDataURL('image/png');
-        const a = document.createElement('a');
-        a.href = pngUrl;
-        a.download = filename + '.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        showToast('✓ High-Res PNG downloaded!');
+            let width = 0, height = 0;
+            const viewBox = svg.getAttribute('viewBox');
+            if (viewBox) {
+              const parts = viewBox.split(/[\s,]+/).filter(Boolean).map(Number);
+              if (parts.length >= 4 && parts[2] > 0 && parts[3] > 0) {
+                width = parts[2];
+                height = parts[3];
+              }
+            }
+            if (!width || !height) {
+              try {
+                const bbox = svg.getBBox();
+                if (bbox && bbox.width > 0 && bbox.height > 0) {
+                  width = bbox.width;
+                  height = bbox.height;
+                }
+              } catch (e) {}
+            }
+            if (!width || !height) {
+              const rect = svg.getBoundingClientRect();
+              width = rect.width || 1200;
+              height = rect.height || 800;
+            }
+
+            clonedSvg.setAttribute('width', width);
+            clonedSvg.setAttribute('height', height);
+
+            const svgString = new XMLSerializer().serializeToString(clonedSvg);
+            const svgBase64 = 'data:image/svg+xml;charset=utf-8;base64,' + btoa(unescape(encodeURIComponent(svgString)));
+
+            const scale = 2.5; // High-res academic quality (300 DPI equivalent)
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(width * scale);
+            canvas.height = Math.round(height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+
+            img.onload = () => {
+              try {
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const pngUrl = canvas.toDataURL('image/png');
+                resolve(pngUrl);
+              } catch (drawErr) {
+                reject(drawErr);
+              }
+            };
+
+            img.onerror = (err) => {
+              reject(new Error('Image failed to load SVG string: ' + err));
+            };
+
+            img.src = svgBase64;
+          } catch (err) {
+            reject(err);
+          }
+        });
       };
 
-      img.src = url;
+      try {
+        // Strategy 1: Direct SVG-to-Canvas rasterization
+        const pngUrl = await attemptSvgToCanvas();
+        triggerDownload(pngUrl, filename + '.png');
+        showToast('✓ High-Res PNG downloaded!');
+      } catch (err) {
+        console.warn('Strategy 1 (SVG-to-Canvas) failed:', err.message, '- Falling back to Strategy 2 (html2canvas)...');
+
+        try {
+          // Strategy 2: html2canvas DOM snapshot (bypasses foreignObject tainting restrictions)
+          if (typeof html2canvas !== 'undefined') {
+            const canvas = await html2canvas(container, {
+              backgroundColor: '#ffffff',
+              scale: 2.5,
+              useCORS: true,
+              logging: false,
+              allowTaint: true
+            });
+            const pngUrl = canvas.toDataURL('image/png');
+            triggerDownload(pngUrl, filename + '.png');
+            showToast('✓ High-Res PNG downloaded (Snapshot mode)!');
+            return;
+          }
+        } catch (h2cErr) {
+          console.error('Strategy 2 (html2canvas) also failed:', h2cErr);
+        }
+
+        // Strategy 3: Graceful fallback to SVG
+        showToast('Browser security blocked PNG rasterization. Downloading vector SVG instead!');
+        downloadSvg(containerId, filename);
+      }
     }
   </script>
 </body>
