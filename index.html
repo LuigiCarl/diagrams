@@ -308,6 +308,182 @@
       .card-header { flex-direction: column; align-items: flex-start; }
       .card-actions { width: 100%; justify-content: flex-start; }
     }
+  
+    /* ============================================================== */
+    /* Capstone Academic Description Styling                          */
+    /* ============================================================== */
+    .capstone-desc-container {
+      margin-bottom: 1.5rem;
+      padding: 1.6rem;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      transition: all 0.25s ease;
+    }
+
+    .desc-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .desc-caption {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .desc-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .desc-section {
+      margin-bottom: 1.35rem;
+    }
+
+    .desc-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .desc-section h4 {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #0369a1;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .desc-section p {
+      font-size: 0.90rem;
+      color: #334155;
+      line-height: 1.68;
+      margin-bottom: 0.5rem;
+    }
+
+    .desc-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0.5rem 0;
+    }
+
+    .desc-list > li {
+      font-size: 0.89rem;
+      color: #334155;
+      line-height: 1.65;
+      margin-bottom: 0.55rem;
+      padding-left: 1.25rem;
+      position: relative;
+    }
+
+    .desc-list > li::before {
+      content: "•";
+      position: absolute;
+      left: 0.25rem;
+      color: #0284c7;
+      font-weight: bold;
+    }
+
+    .desc-list ul {
+      list-style-type: circle;
+      padding-left: 1.5rem;
+      margin: 0.35rem 0 0.45rem 0;
+    }
+
+    .desc-list ul li {
+      font-size: 0.86rem;
+      color: #475569;
+      line-height: 1.55;
+      margin-bottom: 0.25rem;
+    }
+
+    .desc-list strong {
+      color: #0f172a;
+    }
+
+    .desc-table-wrapper {
+      overflow-x: auto;
+      margin: 0.85rem 0;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .desc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+
+    .desc-table th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 0.65rem 0.95rem;
+      border-bottom: 2px solid #cbd5e1;
+      white-space: nowrap;
+    }
+
+    .desc-table td {
+      padding: 0.6rem 0.95rem;
+      border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: top;
+    }
+
+    .desc-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .desc-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    .math-box {
+      background: #f8fafc;
+      border-left: 3px solid #0284c7;
+      padding: 0.75rem 1.1rem;
+      margin: 0.65rem 0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      color: #0f172a;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.6;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: #0284c7;
+      border: 1px solid #0284c7;
+    }
+
+    .btn-outline:hover {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
   </style>
 </head>
 <body>
@@ -352,12 +528,13 @@
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🏛️</span> Fig. 4.1: System Architecture Diagram of Laundry Shop</h2>
-          <p>Multi-Layer System Architecture (User Layer, Mobile Application Layer, Cloud Backend Layer, Database & External Services Layer)</p>
+          <p>Multi-Layer System Architecture (User Layer, Mobile Application Layer, Cloud Layer, and Database Layer)</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig41', 'Fig_4_1_System_Architecture')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig41', 'Fig_4_1_System_Architecture')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig41')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig41')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -377,36 +554,36 @@ flowchart TB
     %% ==============================================================
     %% 2. MOBILE APPLICATION LAYER
     %% ==============================================================
-    subgraph Layer2 ["2. MOBILE APPLICATION LAYER (React Native / Expo Client App)"]
+    subgraph Layer2 ["2. MOBILE APPLICATION LAYER (React Native Client App)"]
         direction TB
         subgraph MobileModules ["Modular Client Interfaces"]
             direction LR
-            M_Cust["<b>Customer App</b><br/>• Service Catalog<br/>• Booking & Cart<br/>• Live Order Tracking<br/>• In-App Chat"]
-            M_Rider["<b>Rider App</b><br/>• Paunahan Job Feeds<br/>• Turn-by-Turn GPS<br/>• Pickup/Dropoff Proof<br/>• Earnings & History"]
-            M_Owner["<b>Shop Owner Portal</b><br/>• Order Queue Board<br/>• Wash / Dry / Fold Ops<br/>• POS & Services Config<br/>• Remittance Records"]
-            M_Admin["<b>Admin Interface</b><br/>• Laundry Shop Audit<br/>• Rider Verification<br/>• Platform Metrics<br/>• System Audit Logs"]
+            M_Cust["<b>Customer App</b><br/>• Service Request<br/>• Map Pinning<br/>• Live Order Tracking<br/>• In-App Chat"]
+            M_Rider["<b>Rider App</b><br/>• Delivery Schedules<br/>• Turn-by-Turn GPS<br/>• Pickup/Delivery Confirm<br/>• COD Collection"]
+            M_Owner["<b>Shop Owner Portal</b><br/>• Order Management<br/>• Laundry Processing Ops<br/>• Rider Assignment<br/>• Shop Profile"]
+            M_Admin["<b>Admin Interface</b><br/>• User Management<br/>• Shop Account Approval<br/>• Activity Monitoring<br/>• System Reports"]
         end
-        ClientCore["⚙️ <b>Client Application Core:</b> Zustand State Engine • TanStack Query Cache • Laravel Echo (Reverb WSS Client)"]
+        ClientCore["⚙️ <b>Client Application Core:</b> State Management (Redux/Zustand) • REST API Sync • Real-Time WebSockets"]
         MobileModules --- ClientCore
     end
 
     %% ==============================================================
-    %% 3. CLOUD APPLICATION LAYER (Laravel 13 Backend)
+    %% 3. CLOUD APPLICATION LAYER (Laravel 11+ Backend)
     %% ==============================================================
-    subgraph Layer3 ["3. CLOUD APPLICATION LAYER (Laravel 13 Cloud Backend)"]
+    subgraph Layer3 ["3. CLOUD APPLICATION LAYER (Laravel 11+ Cloud Backend)"]
         direction TB
         
-        Gateway["🔐 <b>API Gateway & Security Layer</b><br/>RESTful HTTPS Reverse Proxy • Laravel Sanctum Bearer Auth • Role-Based Access Control (RBAC)"]
+        Gateway["🔐 <b>API Gateway & Security Layer</b><br/>RESTful HTTPS Endpoints • Sanctum Authentication • Role-Based Access Control"]
 
         subgraph CoreEngines ["Core Business Logic Engines"]
             direction LR
-            E_Order["🧺 <b>Order & Cycle Engine</b><br/>Queue → Wash → Dry<br/>Fold → Ready for Delivery"]
-            E_Dispatch["🚀 <b>Dispatch & Matching</b><br/>Paunahan Broadcast<br/>& Direct Assignment"]
-            E_Geo["📍 <b>Bulan Geocoding & GIS</b><br/>Haversine Distance Matrix<br/>& Barangay Boundary Grid"]
-            E_Notify["🔔 <b>Notification Engine</b><br/>FCM Background Push<br/>& In-App Event Alerts"]
+            E_Order["🧺 <b>Order Management Engine</b><br/>Pending → In Process<br/>Ready → Completed"]
+            E_Dispatch["🚀 <b>Delivery Scheduling Engine</b><br/>Rider Assignment<br/>& Delivery Coordination"]
+            E_Geo["📍 <b>Bulan Geocoding & Mapping</b><br/>Landmark Identification<br/>& Route Recommendation"]
+            E_Notify["🔔 <b>Notification Engine</b><br/>FCM Background Push<br/>& Real-Time Alerts"]
         end
 
-        Reverb["⚡ <b>Real-Time WebSocket Engine (Laravel Reverb)</b><br/>Sub-Second Live Rider GPS Tracking & Bi-Directional Order Status Broadcasts (WSS)"]
+        Reverb["⚡ <b>Real-Time Event Engine</b><br/>Real-Time Rider Location Updates & Bi-Directional Order Status Broadcasts"]
 
         Gateway --> CoreEngines
         CoreEngines <--> Reverb
@@ -417,9 +594,9 @@ flowchart TB
     %% ==============================================================
     subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
         direction LR
-        DB[("🗄️ <b>MySQL / MariaDB Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
-        OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
-        FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
+        DB[("🗄️ <b>PostgreSQL 16 Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        OSM["🗺️ <b>Google Maps / Leaflet.js</b><br/>Bulan Road Network Geometry<br/>& Route Distance Recommendations"]
+        FCM["📲 <b>Firebase Cloud Messaging (FCM)</b><br/>Native Mobile Background Push Delivery<br/>for Android & iOS"]
     end
 
     %% ==============================================================
@@ -431,10 +608,10 @@ flowchart TB
     U_Admin --> M_Admin
 
     ClientCore ==> |"HTTPS Requests (REST API)"| Gateway
-    ClientCore <==> |"WSS WebSockets (Live GPS & Status)"| Reverb
+    ClientCore <==> |"WebSockets (Live Updates)"| Reverb
 
     CoreEngines --> |"Eloquent ORM"| DB
-    E_Geo -.-> |"Road Navigation"| OSM
+    E_Geo -.-> |"Route Navigation"| OSM
     E_Notify -.-> |"Push Triggers"| FCM
 
     %% ==============================================================
@@ -465,9 +642,45 @@ flowchart TB
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formally implements the multi-layer system architecture described in Chapter 4 (Section 4.1, Figure 4.1). Bridges the User Layer, Mobile Application Layer (React Native/Expo), Cloud Layer (Laravel 13 Sanctum API Gateway, Core Business Engines & Reverb WebSockets), and the Data Persistence Layer (MySQL / MariaDB, OSM/OSRM GIS, FCM) with strict top-to-bottom flow without visual clutter.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig41">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.1: System Architecture Diagram of Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Concept</h4>
+    <p>
+      The system architecture 4.1 is designed using a multi-layer structure composed of the user layer, mobile application layer, cloud layer, and database layer. This architecture ensures smooth communication, efficient processing, and reliable data management across the entire system. It establishes the goal of improving laundry service efficiency through a mobile, map-based solution that enhances booking, delivery scheduling, and route optimization.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Architectural Layer Decomposition</h4>
+    <ul class="desc-list">
+      <li><strong>User Layer:</strong> At the user layer, the system is accessed by customers, riders, and laundry shop owners. Customers place laundry pickup and delivery requests, riders manage delivery tasks and follow optimized routes, while administrators oversee and manage the overall system operations.</li>
+      <li><strong>Mobile Application Layer:</strong> The mobile application layer, developed using React Native, serves as the main interface of the system. It allows users to interact with key features such as booking services, viewing map locations, tracking laundry status, receiving notifications, and communicating through chat. This layer ensures a responsive and user-friendly experience on mobile devices.</li>
+      <li><strong>Cloud Layer:</strong> Powered by Laravel 11+ (PHP 8.3+) hosted on Render, the cloud layer provides online hosting and real-time connectivity. It enables the system to support multiple users simultaneously, ensures data synchronization, and allows real-time updates for tracking, notifications, and service status. This layer also improves system scalability and availability.</li>
+      <li><strong>Database &amp; External Services Layer:</strong> The database layer, powered by PostgreSQL 16 (hosted on Supabase), is responsible for storing and managing all system data, including user profiles, laundry orders, delivery schedules, route information, and transaction history. It ensures data integrity, consistency, and fast retrieval of information needed by the system. Mapping and route recommendations are handled using Google Maps Platform API and Leaflet.js, while native push notifications are powered by Firebase Cloud Messaging (FCM).</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Operational Flow &amp; Inter-Tier Communication</h4>
+    <p>
+      User actions on the React Native mobile application trigger API calls to the Laravel backend. The server processes request logic, verifies permissions, communicates with PostgreSQL through Eloquent ORM, and interacts with third-party mapping services for route recommendations. Notifications and live status updates are dispatched back to the mobile devices in real time, keeping all stakeholders coordinated.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; System Evaluation</h4>
+    <p>
+      Overall, these interconnected layers work together to provide a reliable, efficient, and real-time laundry pickup and delivery system that supports and improves service delivery for both users and the centralized laundry shop. The design directly supports the evaluation criteria under ISO/IEC 25010:2023, namely Functional Suitability, Interaction Capability, and Performance Efficiency.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig41">flowchart TB
@@ -525,9 +738,9 @@ flowchart TB
     %% ==============================================================
     subgraph Layer4 ["4. DATA PERSISTENCE & EXTERNAL SERVICES LAYER"]
         direction LR
-        DB[("🗄️ <b>MySQL / MariaDB Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
-        OSM["🗺️ <b>OpenStreetMap & OSRM</b><br/>Bulan Road Network Geometry<br/>& Distance Routing Engine"]
-        FCM["📲 <b>Firebase Cloud Messaging</b><br/>Native Background Push Delivery<br/>for iOS & Android Clients"]
+        DB[("🗄️ <b>PostgreSQL 16 Database</b><br/>Users, Laundry Orders, Transaction Logs,<br/>Delivery Schedules & Geocoding Coordinates")]
+        OSM["🗺️ <b>Google Maps / Leaflet.js</b><br/>Bulan Road Network Geometry<br/>& Route Distance Recommendations"]
+        FCM["📲 <b>Firebase Cloud Messaging (FCM)</b><br/>Native Mobile Background Push Delivery<br/>for Android & iOS"]
     end
 
     %% ==============================================================
@@ -579,12 +792,13 @@ flowchart TB
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🌐</span> Fig. 4.2: Context Flow Diagram Level 0</h2>
-          <p>Context-level data flows between Customer, Owner, Rider, Admin, and the central Labada engine</p>
+          <p>Context-level view of data flows between Admin, Owner, Rider, Customer, and the centralized laundry system</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig42', 'Fig_4_2_Context_Flow_Diagram_Level_0')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig42', 'Fig_4_2_Context_Flow_Diagram_Level_0')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig42')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig42')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -645,9 +859,41 @@ flowchart TB
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formally adheres to Yourdon/DeMarco Level 0 context specifications (Figure 4.2, p. 19). Places the central 0.0 Labada System at the core with high-level data inflows and outflows mapped symmetrically to the external entities without visual clutter or unreadable micro-text.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig42">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.2: Context Flow Diagram Level 0
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      A Data Flow Diagram (DFD) is a graphical representation that illustrates how data moves within a system process. It uses standardized symbols and notations to show data sources, processes, data storage, and outputs. The DFD helps visualize information flows between users, the mobile application, the backend system, and the database, providing a clear understanding of system operations and data interactions.
+    </p>
+    <p>
+      Shown in Figure 4.2, the Level 0 Data Flow Diagram (DFD) presents the context-level view of the system. In this diagram, the system is positioned at the center, representing the main process. External entities such as the Admin, Owner, Rider, and Customer interact with the system, and these interactions are illustrated through arrows that indicate the flow of data between each entity and the system.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. External Entities &amp; Data Interactions</h4>
+    <ul class="desc-list">
+      <li><strong>Customer:</strong> Inputs registration/login credentials, service requests (service selection, preferred schedule, and detergent preferences), and reviews &amp; feedback. In return, the customer receives map location coordinates, real-time laundry status updates, delivery/pickup service coordination, and order receipts.</li>
+      <li><strong>Owner:</strong> Inputs login and sign-up details, services and pricing configurations, and laundry processing status updates, while receiving customer booking notifications and delivery assignment updates from the system.</li>
+      <li><strong>Rider:</strong> Transmits rider login authentication, real-time map location updates, and delivery status changes, while receiving assigned pickup and delivery details, customer location information, and navigation directions.</li>
+      <li><strong>Admin:</strong> Interacts with the system through admin console access, logging in to monitor overall system operations, verify transactions, manage user and shop accounts, and review system reports.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Overall Summary &amp; System Scope</h4>
+    <p>
+      Overall, this diagram provides an overview of how information enters and exits the system, helping to clearly understand its overall functionality and scope. By centralizing all data exchanges through the core application, the system ensures seamless coordination among customers, laundry shops, and delivery personnel.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig42">flowchart TB
@@ -712,12 +958,13 @@ flowchart TB
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>📊</span> Fig. 4.3: Data Flow Diagram Level 1</h2>
-          <p>Functional decomposition of 7 major sub-processes and 7 persistent data stores</p>
+          <p>Sub-process functional decomposition illustrating internal data flows and database interactions</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig43', 'Fig_4_3_Data_Flow_Diagram_Level_1')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig43', 'Fig_4_3_Data_Flow_Diagram_Level_1')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig43')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig43')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -794,9 +1041,45 @@ flowchart LR
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Directly reflects the 8 functional core subsystems outlined in the research methodology (Figure 4.3), mapping all four actors (Customer, Admin, Rider, Owner) directly to the specific functional interactions they perform without visual clutter.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig43">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.3: Data Flow Diagram Level 1
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.3 presents the Level 1 Data Flow Diagram (DFD). This diagram provides a more detailed representation of the system compared to the Level 0 diagram. While the Level 0 DFD illustrates the system as a single process, the Level 1 DFD breaks it down into smaller sub-processes to clearly show how data flows and how internal operations are carried out within the application.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Sub-Processes &amp; Entity Operations</h4>
+    <p>
+      The diagram identifies the external entities—Admin, Owner, Rider, and Customer—and the specific actions they perform across eight core functional sub-processes:
+    </p>
+    <ul class="desc-list">
+      <li><strong>1.0 Login:</strong> Handles secure authentication, credential checking, and role verification for Customers, Shop Owners, Riders, and Admins.</li>
+      <li><strong>2.0 Service Request Management:</strong> Manages laundry booking requests, service type selections, detergent preferences, and order confirmations.</li>
+      <li><strong>3.0 Delivery Schedules:</strong> Coordinates pickup and delivery timings, organizes rider assignments, and manages delivery windows.</li>
+      <li><strong>4.0 Map Location:</strong> Processes geographic coordinates, landmark identification, and route visualization for customers and delivery riders.</li>
+      <li><strong>5.0 Laundry Status:</strong> Tracks and updates the live operational status of laundry orders from pickup through processing (wash, dry, fold) to final delivery.</li>
+      <li><strong>6.0 Chat Communication:</strong> Facilitates direct communication and messaging between customers, riders, and laundry shop owners to coordinate orders and resolve inquiries.</li>
+      <li><strong>7.0 Reviews &amp; Feedback:</strong> Collects customer ratings and feedback regarding the service performance of the laundry shop and delivery riders.</li>
+      <li><strong>8.0 Account Management:</strong> Oversees user accounts, administrative CRUD operations, shop approvals, and platform governance.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Overall Summary &amp; Functional Modularity</h4>
+    <p>
+      Overall, this detailed view helps in understanding how data is processed and how each component contributes to the overall functionality of the system. Isolating data transformations into structured sub-processes ensures high modularity, transactional consistency, and dependable operational coordination across the platform.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig43">flowchart LR
@@ -877,12 +1160,13 @@ flowchart LR
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🎯</span> Fig. 4.4: Use Case Diagram for Laundry Shop</h2>
-          <p>UML 2.5 Use Case model capturing interactions, includes, and extends for all actors</p>
+          <p>UML Use Case model illustrating interactions, associations, includes, and extends across primary user actors</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig44', 'Fig_4_4_Use_Case_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig44', 'Fig_4_4_Use_Case_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig44')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig44')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1012,9 +1296,52 @@ flowchart LR
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Faithfully reproduces Figure 4.4 of the research methodology (p. 21). Outlines all 4 primary system actors (Admin, Customer, Shop Owner, Rider) across their respective functional modules, explicitly specifying mandatory UML reuse relations (<code>&lt;&lt;include&gt;&gt;</code>) and optional/conditional branch flows (<code>&lt;&lt;extend&gt;&gt;</code>) including credential verification, address validation, service selection, pickup scheduling, order cancellation, push notification reception, and COD delivery settlement.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig44">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.4: Use Case Diagram for Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      A Use Case Diagram is a high-level behavioral diagram and a fundamental component of the Unified Modeling Language (UML). It visually represents the interactions between users (actors), the system, and the use cases (functions) that users aim to accomplish. It outlines the system’s functionalities and illustrates how different users interact with the system to achieve specific objectives.
+    </p>
+    <p>
+      In this context, the use case diagram represents the interactions between the system and its primary users, namely the <strong>Customer</strong>, <strong>Rider</strong>, <strong>Admin</strong>, and <strong>Owner</strong>. The oval shapes (use cases) depict the actions that users can perform. The lines connecting actors to use cases, known as associations, indicate the interactions between users and the system functions.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Primary Actor Capabilities</h4>
+    <ul class="desc-list">
+      <li><strong>Customer:</strong> Can perform functions including <em>Register Account</em>, <em>Login</em>, <em>Request Pickup</em>, <em>Track Status</em>, <em>Feedback &amp; Rate</em>, <em>View History</em>, and <em>Pay on Delivery</em>.</li>
+      <li><strong>Shop Owner:</strong> Can execute functionalities such as <em>Login</em>, <em>Manage Services/Pricing</em>, <em>Manage Customer</em>, <em>Monitor Orders</em>, and <em>Track Rider</em>.</li>
+      <li><strong>Rider:</strong> Can manage delivery tasks including <em>View Pickups</em>, <em>Navigate</em>, <em>Confirm Pickup</em>, <em>Contact Customer</em>, and <em>Deliver</em>.</li>
+      <li><strong>Administrator:</strong> Has additional privileges such as <em>Create Shop Owner Account</em>, <em>Manage Users</em>, and <em>View System Reports</em> to oversee overall system performance.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Stereotype Relationships (&lt;&lt;include&gt;&gt; and &lt;&lt;extend&gt;&gt;)</h4>
+    <p>
+      The diagram defines clear operational relationships between use cases:
+    </p>
+    <ul class="desc-list">
+      <li><strong>&lt;&lt;include&gt;&gt; Relationships:</strong> The “include” relationship shows mandatory processes that are reused across different functions. For instance, customer and owner login include <em>Verify Password</em>; requesting a pickup includes <em>Verify Address</em>, <em>Select Services</em>, and <em>Schedule</em>; and delivering includes <em>Update Laundry Status</em> and <em>Collect COD</em>.</li>
+      <li><strong>&lt;&lt;extend&gt;&gt; Relationships:</strong> The “extend” relationship represents optional or conditional functionalities. For example, login is extended by <em>Display Error</em> upon invalid input; requesting a pickup is extended by <em>Cancel Pickup Request</em>; and tracking status is extended by <em>Receive Notification</em> when order updates occur.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Functional Integration</h4>
+    <p>
+      As shown in the figure, the system highlights key features such as service request management, delivery scheduling, map-based location tracking, route recommendation, laundry status monitoring, notifications, chat communication, and feedback. Overall, the use case diagram provides a clear visualization of how each user interacts with the system and how functionalities are integrated to support efficient laundry pickup and delivery services.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig44">flowchart LR
@@ -1148,12 +1475,13 @@ flowchart LR
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🛡️</span> Fig. 4.5: Admin Activity Diagram of the Laundry Shop</h2>
-          <p>Full administrative governance: reviewing pending laundry shop permits in Bulan, user management, live GIS monitoring, and ISO/IEC 25010 academic analytics.</p>
+          <p>Sequence of administrative actions, decision points, and management functions for laundry shop operations</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig45', 'Fig_4_5_Admin_Activity_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig45', 'Fig_4_5_Admin_Activity_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig45')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig45')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1216,9 +1544,45 @@ flowchart TD
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Represents the complete operational scope of the Platform Administrator in the Labada system. Captures authentication, laundry shop accreditation via DTI and Mayor's permit verification, cross-role user governance, live Bulan operations monitoring, and empirical ISO/IEC 25010 usability data aggregation.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig45">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.5: Admin Activity Diagram of the Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      An Activity Diagram, a type of Unified Modeling Language (UML) diagram, visually illustrates the sequence of activities or actions within a system, similar to a flowchart. It is used to model workflows, business processes, and system behaviors. In this study, the activity diagram represents how users interact with the mobile application.
+    </p>
+    <p>
+      Figure 4.5: Admin Activity Diagram of the Laundry Shop illustrates the sequence of actions and decision-making processes performed by the administrator in managing the laundry shop mobile application. The diagram begins with the admin logging into the application, where authentication is required to ensure secure access. Once logged in, the administrator can navigate through different management functions such as handling customer records, managing orders, and monitoring service requests.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Administrative Workflow &amp; Management Functions</h4>
+    <p>
+      The diagram shows how the admin processes incoming laundry orders by reviewing order details, confirming requests, and assigning them for pickup or processing. It also highlights the ability of the administrator to update order status, such as marking items as “in process,” “ready for delivery,” or “completed.” Additionally, the activity diagram demonstrates how the admin manages user accounts, creates shop owner accounts, generates reports, and oversees application operations.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Error Handling</h4>
+    <p>
+      Decision points are included to represent validations, such as verifying order information or checking service availability. Error-handling paths, such as invalid inputs or failed transactions, are also represented to ensure application reliability. The process concludes when the admin logs out of the system, marking the end of the session.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Operational Efficiency</h4>
+    <p>
+      Overall, the figure provides a clear visualization of the admin’s workflow, emphasizing efficiency, control, and the systematic handling of laundry shop operations within the application.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig45">flowchart TD
@@ -1285,12 +1649,13 @@ flowchart TD
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🧺</span> Fig. 4.6: Owner Activity Diagram of the Laundry Shop</h2>
-          <p>End-to-end laundromat operations: shop profile & supply management, booking approval/rejection, rider dispatching (dedicated vs broadcast), multi-stage laundry cycle, and COD cash reconciliation.</p>
+          <p>Sequence of actions performed by the laundry shop owner to oversee operations, orders, and rider assignments</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig46', 'Fig_4_6_Owner_Activity_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig46', 'Fig_4_6_Owner_Activity_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig46')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig46')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1359,9 +1724,45 @@ flowchart TD
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Details the complete lifecycle of a Laundry Shop Owner in Labada. Encompasses shop onboarding and document submission, service pricing and detergent stock configuration, order intake decision trees, dual-mode rider dispatching, in-house washing/drying/folding phases, and end-of-order Cash-on-Delivery remittance reconciliation.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig46">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.6: Owner Activity Diagram of the Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.6: Owner Activity Diagram of the Laundry Shop illustrates the sequence of actions performed by the owner using the mobile application to effectively oversee and manage business operations. The process begins with the owner securely logging into the mobile application (or completing new shop registration) to ensure authorized access.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Operational Workflow &amp; Order Processing</h4>
+    <p>
+      After successful login, the owner is directed to the dashboard, where an overview of operations is displayed, including orders, users, and service activity. From this interface, the owner can approve user registrations, ensuring that only verified customers or staff can access the application.
+    </p>
+    <p>
+      The diagram further shows how the owner can manage orders by reviewing request details, confirming transactions, and monitoring their progress. A key activity highlighted is the ability to assign riders for pickup and delivery services, enabling efficient handling of customer requests. The owner can also update the status of orders, such as marking them as pending, in progress, ready for delivery, or completed.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Operational Validations</h4>
+    <p>
+      Decision points are included to represent validations, such as checking user information, verifying order details, and ensuring rider availability before assignment. These steps help maintain accuracy and efficiency in operations, reducing delays and improving communication between customers and shop personnel.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Management Oversight</h4>
+    <p>
+      Overall, the figure clearly shows how the owner manages orders, oversees daily laundry operations, coordinates delivery assignments, and ensures service quality through the mobile application.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig46">flowchart TD
@@ -1434,12 +1835,13 @@ flowchart TD
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🛵</span> Fig. 4.7: Rider Activity Diagram of the Laundry Shop</h2>
-          <p>Delivery courier lifecycle: duty shift activation, live GPS streaming (5s interval), job offer acceptance, OSRM waypoint navigation, photo proof of pickup/delivery, and COD cash remittance.</p>
+          <p>Workflow and responsibilities of the delivery rider in managing orders, pickup, delivery, and COD collection</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig47', 'Fig_4_7_Rider_Activity_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig47', 'Fig_4_7_Rider_Activity_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig47')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig47')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1494,9 +1896,48 @@ flowchart TD
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Models the full field operations of Delivery Personnel. Spans duty shift toggling with live GPS tracking, audio-modal dispatch offer acceptance, OSRM turn-by-turn routing to customer locations in Bulan, photo proof uploads for pickup and clean delivery, cash collection, and final cash turnover to the laundry shop owner.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig47">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.7: Rider Activity Diagram of the Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.7: Rider Activity Diagram of the Laundry Shop illustrates the workflow and responsibilities of the rider using the mobile application in handling laundry pickup and delivery operations. The process begins with the rider securely logging into the mobile application to access assigned delivery tasks.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Order Handling &amp; Delivery Workflow</h4>
+    <p>
+      Once logged in, the rider is directed to the dashboard where assigned orders are displayed. The rider can view important order details such as customer information, pickup location, delivery address, and payment type. From this interface, the rider may accept the job assignment, confirming availability to handle the delivery.
+    </p>
+    <p>
+      After accepting the order, the rider proceeds to the customer’s location to pick up the laundry items. Upon collection, the rider updates the order status in the mobile application to reflect that the items have been successfully picked up. The rider then continues the delivery process by transporting the laundry to the designated destination.
+    </p>
+    <p>
+      Upon arrival, the rider delivers the laundry to the customer and ensures proper handover. As the transaction involves Cash on Delivery (COD), the rider collects the payment from the customer and confirms the amount within the mobile application to complete the transaction.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Operational Validations</h4>
+    <p>
+      Decision points in the diagram reflect actions such as accepting or declining assignments, confirming successful pickup, and verifying delivery completion and payment collection. These steps ensure accuracy, accountability, and real-time tracking of delivery status. The process concludes when the rider logs out of the mobile application, ensuring proper session termination and data security.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Rider Efficiency</h4>
+    <p>
+      Overall, the figure clearly shows how the rider manages assigned orders, accepts jobs, handles pickup and delivery, and collects COD payments efficiently through the mobile application.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig47">flowchart TD
@@ -1555,12 +1996,13 @@ flowchart TD
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>📱</span> Fig. 4.8: Customer Activity Diagram of the Laundry Shop</h2>
-          <p>End-to-end customer journey: Bulan map pinning, browsing local shops, customized service/supply configuration, live pickup tracking via WebSockets, delivery inspection, and ISO 25010 survey.</p>
+          <p>Workflow and interactions of the customer in booking laundry services, tracking status, and paying via COD</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig48', 'Fig_4_8_Customer_Activity_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig48', 'Fig_4_8_Customer_Activity_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig48')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig48')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1615,9 +2057,48 @@ flowchart TD
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Illustrates the entire digital experience of Customers using the Labada mobile application. Details account setup, geographic coordinate pinning with Bulan barangay and landmark data, granular order tailoring (detergents, softeners, estimated weight), real-time courier tracking via Laravel Echo/Reverb, delivery inspection, and academic usability feedback submission.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig48">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.8: Customer Activity Diagram of the Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.8: Customer Activity Diagram of the Laundry Shop illustrates the workflow and interactions of the customer using the mobile application in availing laundry services. The process begins when the customer logs into the mobile application, ensuring secure access to their account and services.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Booking Request &amp; Status Tracking</h4>
+    <p>
+      Once logged in, the customer can request pickup by providing the necessary details such as pickup location, preferred schedule, and laundry instructions. After entering the required information, the customer proceeds to submit the order, which is then processed by the application for confirmation and assignment to available personnel.
+    </p>
+    <p>
+      After submission, the customer can track and receive delivery updates through the mobile application. This allows real-time monitoring of the order status, including stages such as order confirmation, pickup, processing, delivery in progress, and successful completion. Notifications are also provided to keep the customer informed throughout the process.
+    </p>
+    <p>
+      The payment method is Cash on Delivery (COD) only, and the customer is required to pay COD directly to the rider upon receipt of the laundry items. The transaction will then be marked as completed in the application, and the user may submit ratings and feedback for the shop and rider.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Operational Validations</h4>
+    <p>
+      Decision points in the diagram represent key actions such as confirming order submission, validating order status updates, and completing payment upon delivery. These ensure proper flow and accuracy of customer transactions within the application.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Service Experience</h4>
+    <p>
+      The activity diagram presents the overall workflow of the system, showing the interactions among these actors and the integrated components such as the mobile application, backend system, database, and mapping API. Overall, the activity diagram provides a clear visualization of the system workflow, emphasizing coordination among all four actors and the system’s ability to deliver efficient, reliable, and user-friendly laundry services.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig48">flowchart TD
@@ -1675,13 +2156,14 @@ flowchart TD
     <section class="diagram-card" id="fig49">
       <div class="card-header">
         <div class="card-title-group">
-          <h2><span>🗄️</span> Fig. 4.9: Entity-Relationships Diagram of the Laundry Shop (ERD)</h2>
-          <p>Complete Relational Database Architecture (14 Normalized Tables: Users, Shops, Services, Supplies, Riders, Shop-Rider, Addresses, Orders, Payments, COD Remittances, Feedback, Chat, Notifications, Evaluations)</p>
+          <h2><span>🗄️</span> Fig. 4.9: Entity-Relationships Diagram of the Laundry Shop</h2>
+          <p>Database entity-relationship structure, primary and foreign keys, and relational data management</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig49', 'Fig_4_9_Entity_Relationships_Diagram')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig49', 'Fig_4_9_Entity_Relationships_Diagram')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig49')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig49')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -1822,9 +2304,120 @@ erDiagram
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formulates the comprehensive 14-table relational database architecture powering the Labada platform. Represents all primary keys (PK), foreign keys (FK), and business cardinalities encompassing multi-role users, laundry catalog configurations, geolocation coordinates, order fulfillment pipelines, COD remittance tracking, in-app messaging, and ISO/IEC 25010 research metrics.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig49">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.9: Entity-Relationships Diagram of the Laundry Shop
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      The Entity-Relationship Diagram (ERD) illustrates the structure of the database and the relationships between different entities within the application. It provides a visual representation of how data are organized, stored, and interconnected to support system operations.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Main System Entities &amp; Functional Roles</h4>
+    <p>
+      The main entities in the system include Customer, Admin, Owner, Rider, Service Request, Delivery Schedule, Laundry Order, Payment, Feedback, and Notification:
+    </p>
+    <ul class="desc-list">
+      <li><strong>Customer:</strong> The Customer entity is responsible for creating service requests and managing laundry orders.</li>
+      <li><strong>Delivery Schedule:</strong> Each service request is associated with a Delivery Schedule, which determines the pickup and delivery time.</li>
+      <li><strong>Rider:</strong> The Rider entity is linked to delivery schedules, as riders are assigned to handle pickup and delivery tasks.</li>
+      <li><strong>Shop &amp; Owner:</strong> The Shop entities manage application operations, including monitoring service requests, verifying transactions, and overseeing overall performance.</li>
+      <li><strong>Laundry Order:</strong> The Laundry Order entity stores detailed information about each transaction, including status updates from pickup to delivery.</li>
+      <li><strong>Payment:</strong> The Payment entity records transaction details, supporting Cash on Delivery (COD) as the primary mode of payment.</li>
+      <li><strong>Feedback:</strong> The Feedback entity allows customers to rate and review the service quality of both the laundry shop and delivery personnel.</li>
+      <li><strong>Notification:</strong> The Notification entity manages application-generated alerts and real-time updates sent to users.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Relational Schema &amp; Referential Constraints</h4>
+    <p>
+      Relationships between these entities are established through primary keys and foreign keys to ensure data integrity and consistency:
+    </p>
+    <div class="desc-table-wrapper">
+      <table class="desc-table">
+        <thead>
+          <tr>
+            <th>Parent Entity</th>
+            <th>Cardinality</th>
+            <th>Child Entity</th>
+            <th>Relational Integrity &amp; Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>USERS</code></td>
+            <td>1 : N</td>
+            <td><code>ADDRESSES</code></td>
+            <td>A customer can register multiple pickup and delivery addresses.</td>
+          </tr>
+          <tr>
+            <td><code>USERS</code></td>
+            <td>1 : 1</td>
+            <td><code>SHOPS</code></td>
+            <td>An owner account is linked to their respective laundry shop entity.</td>
+          </tr>
+          <tr>
+            <td><code>USERS</code></td>
+            <td>1 : 1</td>
+            <td><code>RIDERS</code></td>
+            <td>A rider account is associated with their courier profile and delivery vehicle.</td>
+          </tr>
+          <tr>
+            <td><code>USERS</code></td>
+            <td>1 : N</td>
+            <td><code>ORDERS</code></td>
+            <td>A customer can place multiple laundry orders over time.</td>
+          </tr>
+          <tr>
+            <td><code>SHOPS</code></td>
+            <td>1 : N</td>
+            <td><code>ORDERS</code></td>
+            <td>A laundry shop receives and processes multiple customer orders.</td>
+          </tr>
+          <tr>
+            <td><code>RIDERS</code></td>
+            <td>1 : N</td>
+            <td><code>ORDERS</code></td>
+            <td>A rider can be assigned to multiple pickup and delivery orders.</td>
+          </tr>
+          <tr>
+            <td><code>ORDERS</code></td>
+            <td>1 : 1</td>
+            <td><code>PAYMENTS</code></td>
+            <td>Each completed laundry order is linked to a corresponding payment record.</td>
+          </tr>
+          <tr>
+            <td><code>ORDERS</code></td>
+            <td>0..1 : 1</td>
+            <td><code>FEEDBACK</code></td>
+            <td>A completed order can receive feedback and rating from the customer.</td>
+          </tr>
+          <tr>
+            <td><code>USERS</code></td>
+            <td>1 : N</td>
+            <td><code>NOTIFICATIONS</code></td>
+            <td>A user receives multiple real-time system alerts and status updates.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Database Design</h4>
+    <p>
+      Overall, the ERD provides a structured view of the database design, ensuring efficient data management and supporting the application functionality for laundry pickup and delivery. Implemented in PostgreSQL 16 via Laravel Eloquent ORM, it guarantees consistency, avoids redundancy, and provides fast data retrieval during operational peak periods.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig49">erDiagram
@@ -1969,12 +2562,13 @@ erDiagram
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>📍</span> Fig. 4.10: 5-Tier Bulan Address & Geocoding Fallback Cascade</h2>
-          <p>Deterministic Geocoding Algorithm handling informal Philippine rural addresses across Bulan's 63 barangays and landmarks</p>
+          <p>Landmark-based address resolution and hierarchical fallback cascade for Bulan, Sorsogon</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig410', 'Fig_4_10_Geocoding_Cascade')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig410', 'Fig_4_10_Geocoding_Cascade')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig410')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig410')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -2010,9 +2604,53 @@ flowchart TD
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formally specifies the innovative 5-tier address resolution algorithm implemented in <code>GeocodingService.php</code> and <code>bulanCoordinates.ts</code>. It solves the critical rural GIS challenge of non-standardized postal addresses in Bulan, Sorsogon by cascading through GPS coordinates, curated local landmarks, PhilAtlas-verified barangay centroids, regex string parsing, and a deterministic pseudo-random offset around the town center so map pins never vanish or overlap.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig410">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.10: 5-Tier Bulan Address &amp; Geocoding Fallback Cascade
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.10 illustrates the landmark-based location and geocoding fallback mechanism of the application. In local communities such as Bulan, Sorsogon, customers often rely on nearby landmarks rather than complete street addresses. To improve location accuracy and usability, the application incorporates a landmark-based location feature and hierarchical fallback structure, allowing users to specify nearby recognizable places when setting pickup and delivery points.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Hierarchical Resolution Tiers</h4>
+    <p>
+      The algorithm processes customer delivery locations through five systematic tiers to ensure that every address resolves to valid spatial coordinates:
+    </p>
+    <ul class="desc-list">
+      <li><strong>Tier 1: Hardware Device GPS Validation:</strong> Checks whether exact device GPS coordinates (latitude and longitude) are available from the mobile device and within the geographic boundaries of Bulan, Sorsogon.</li>
+      <li><strong>Tier 2: Bulan Landmark Lookup:</strong> Matches user inputs against a curated dictionary of recognizable Bulan landmarks (such as SSU Bulan Campus, Bulan Public Market, Bulan Pier, Freedom Park, and Parish Church) to pinpoint the exact location.</li>
+      <li><strong>Tier 3: Barangay Centroid Lookup:</strong> When specific landmarks are absent, matches the selected barangay against verified geographic coordinates across all sixty-three (63) barangays of Bulan.</li>
+      <li><strong>Tier 4: Heuristic Text Keyword Scanning:</strong> Analyzes raw address strings for identifying keywords (such as purok, sitio, or street names) to associate the location with the closest recognized neighborhood.</li>
+      <li><strong>Tier 5: Town Center Reference Offset:</strong> Serves as the final deterministic fallback based on the Bulan Municipal Center, applying an offset seed to prevent overlapping pins and guarantee valid routing.</li>
+    </ul>
+    <div class="math-box">
+      &Delta;Lat = ((&sum; ASCII(c_i) mod 100) - 50) &times; 0.00002<br/>
+      &Delta;Lng = (((&sum; ASCII(c_i) &times; 7) mod 100) - 50) &times; 0.00002
+    </div>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Location Validations</h4>
+    <p>
+      Decision points evaluate coordinate availability, landmark match accuracy, barangay name normalization, and boundary validation. These validations prevent location ambiguities, reduce delays during pickup, and assist riders in navigating directly to customer homes.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Practical Value</h4>
+    <p>
+      Overall, this figure provides a clear visualization of the landmark-based address resolution process, ensuring accurate location identification, helping riders locate customers efficiently, and supporting reliable laundry delivery operations in Bulan, Sorsogon.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig410">flowchart TD
@@ -2052,12 +2690,13 @@ flowchart TD
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🧺</span> Fig. 4.11: Laundry Order Lifecycle & Finite State Machine (FSM)</h2>
-          <p>State transition model illustrating all 12 order milestones, failure recovery paths, and terminal completion states</p>
+          <p>State transition model illustrating order fulfillment stages, status updates, and milestone tracking</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig411', 'Fig_4_11_Order_State_Machine')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig411', 'Fig_4_11_Order_State_Machine')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig411')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig411')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -2094,9 +2733,149 @@ stateDiagram-v2
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Formulates the robust Finite State Machine (FSM) governing order integrity in Labada's backend. Demonstrates the strict linear workflow from initial booking to pickup, multi-stage laundry processing (wash, dry, fold), dispatch, delivery proof photo capture, COD collection, and resilient recovery handling for unsuccessful pickup or delivery attempts.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig411">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.11: Laundry Order Lifecycle &amp; Finite State Machine (FSM)
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.11 illustrates the order lifecycle and state transition model of the laundry management system. In accordance with the study's functional requirement for laundry status monitoring, the application allows users to monitor the progress of their laundry from pickup, processing, and up to delivery. The state machine governs the sequence of allowable statuses, ensuring that every order progresses systematically without state conflicts.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Order Milestones &amp; Lifecycle Stages</h4>
+    <div class="desc-table-wrapper">
+      <table class="desc-table">
+        <thead>
+          <tr>
+            <th>Current State</th>
+            <th>Target State</th>
+            <th>Transition Trigger / Event</th>
+            <th>Operational Validation &amp; Constraint</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>[*]</code></td>
+            <td><code>pending</code></td>
+            <td>Customer places booking</td>
+            <td>Validates customer details, service selection, and geocoded delivery address.</td>
+          </tr>
+          <tr>
+            <td><code>pending</code></td>
+            <td><code>cancelled</code></td>
+            <td>Customer cancels request</td>
+            <td>Allowed only while status is pending (prior to shop confirmation).</td>
+          </tr>
+          <tr>
+            <td><code>pending</code></td>
+            <td><code>declined</code></td>
+            <td>Shop declines booking</td>
+            <td>Owner declines order due to shop capacity or scheduling limits.</td>
+          </tr>
+          <tr>
+            <td><code>pending</code></td>
+            <td><code>confirmed</code></td>
+            <td>Shop accepts booking</td>
+            <td>Owner confirms order; order moves to rider assignment queue.</td>
+          </tr>
+          <tr>
+            <td><code>confirmed</code></td>
+            <td><code>pickup_assigned</code></td>
+            <td>Rider assigned</td>
+            <td>Rider is allocated to the order for laundry collection.</td>
+          </tr>
+          <tr>
+            <td><code>pickup_assigned</code></td>
+            <td><code>picking_up</code></td>
+            <td>Rider begins transit</td>
+            <td>Rider navigates to customer address with real-time location tracking.</td>
+          </tr>
+          <tr>
+            <td><code>picking_up</code></td>
+            <td><code>pickup_failed</code></td>
+            <td>Customer unreachable</td>
+            <td>Customer is unavailable; re-attempt or cancellation logic applies.</td>
+          </tr>
+          <tr>
+            <td><code>picking_up</code></td>
+            <td><code>picked_up</code></td>
+            <td>Laundry collected</td>
+            <td>Rider collects laundry items and confirms collection in the mobile app.</td>
+          </tr>
+          <tr>
+            <td><code>picked_up</code></td>
+            <td><code>delivered_to_shop</code></td>
+            <td>Arrival at shop</td>
+            <td>Rider delivers laundry items to the centralized laundry shop.</td>
+          </tr>
+          <tr>
+            <td><code>delivered_to_shop</code></td>
+            <td><code>in_laundry</code></td>
+            <td>Weight verified</td>
+            <td>Shop owner verifies actual laundry weight and confirms final pricing.</td>
+          </tr>
+          <tr>
+            <td><code>in_laundry</code></td>
+            <td><code>processing</code></td>
+            <td>Washing started</td>
+            <td>Laundry items undergo washing in accordance with customer preferences.</td>
+          </tr>
+          <tr>
+            <td><code>processing</code></td>
+            <td><code>drying</code></td>
+            <td>Drying started</td>
+            <td>Laundry items undergo drying and sanitization cycles.</td>
+          </tr>
+          <tr>
+            <td><code>drying</code></td>
+            <td><code>ready_for_delivery</code></td>
+            <td>Folding completed</td>
+            <td>Items are folded, packaged, and marked ready for delivery dispatch.</td>
+          </tr>
+          <tr>
+            <td><code>ready_for_delivery</code></td>
+            <td><code>delivering</code></td>
+            <td>Rider dispatched</td>
+            <td>Rider collects clean laundry package and navigates to customer address.</td>
+          </tr>
+          <tr>
+            <td><code>delivering</code></td>
+            <td><code>delivery_failed</code></td>
+            <td>Customer unavailable</td>
+            <td>Customer is not present; package is held or returned to shop hub.</td>
+          </tr>
+          <tr>
+            <td><code>delivering</code></td>
+            <td><code>completed</code></td>
+            <td>Handover &amp; COD payment</td>
+            <td>Customer receives items, pays COD directly to rider, and order completes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Operational Validations</h4>
+    <p>
+      Key decision points enforce validation rules at each transition: verifying shop acceptance, confirming physical collection by the rider, verifying actual weight upon arrival at the shop, validating delivery handover, and confirming COD cash payment collection. Error-handling paths (such as cancellations or failed delivery attempts) ensure system consistency.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Service Transparency</h4>
+    <p>
+      Overall, the order lifecycle diagram provides a clear visualization of the end-to-end transaction progress, ensuring operational transparency, accurate status monitoring, and accountability across all order stages.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig411">stateDiagram-v2
@@ -2137,12 +2916,13 @@ stateDiagram-v2
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>⚡</span> Fig. 4.12: Real-Time WebSocket Telemetry Sequence (Laravel Reverb & Echo)</h2>
-          <p>Sequence diagram illustrating low-latency GPS telemetry transmission, ETA computation, and private channel broadcasting</p>
+          <p>Sequence diagram of real-time GPS telemetry, route updates, and mobile notification synchronization</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig412', 'Fig_4_12_Reverb_WebSockets_Sequence')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig412', 'Fig_4_12_Reverb_WebSockets_Sequence')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig412')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig412')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -2172,9 +2952,50 @@ sequenceDiagram
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Documents the real-time event-driven communication architecture implemented through Laravel Reverb and Laravel Echo. Proves sub-second latency updates for customer tracking, secure token-authenticated private WebSocket channels, and intelligent client-side throttling to minimize battery drain and bandwidth usage during transit across Bulan.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig412">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.12: Real-Time WebSocket Telemetry Sequence (Laravel Reverb &amp; Echo)
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.12 illustrates the sequence of actions and communication flows supporting real-time tracking within the mobile application. As highlighted in the study's functional specifications, the mobile application provides map-based functionality for accurate location selection, real-time tracking, and route visualization for both customers and riders to ensure fast and reliable service coordination.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Telemetry &amp; Location Synchronization Sequence</h4>
+    <ul class="desc-list">
+      <li><strong>Channel Authorization:</strong> The customer mobile application authenticates through the API gateway, verifying authorized access to the private order channel.</li>
+      <li><strong>WebSocket Subscription:</strong> The customer app establishes a secure real-time connection and listens for live updates regarding the active order.</li>
+      <li><strong>Continuous Location Transmission:</strong> During transit, the rider's mobile device periodically transmits current GPS coordinates to the Laravel backend API.</li>
+      <li><strong>Route &amp; ETA Calculation:</strong> The backend computes the remaining travel distance and estimated arrival time based on road network data and route recommendations.</li>
+      <li><strong>Live Map Update:</strong> Location updates and estimated arrival times are broadcast directly to the customer application, updating the map marker smoothly without requiring manual screen refreshes.</li>
+    </ul>
+    <div class="math-box">
+      d = 2R &times; arcsin(&radic;(sin&sup2;(&Delta;&phi;/2) + cos(&phi;_1)cos(&phi;_2)sin&sup2;(&Delta;&lambda;/2)))<br/>
+      ETA_minutes = &lceil;(d &times; 1.35) / v_avg &times; 60&rceil;
+    </div>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Operational Validations</h4>
+    <p>
+      The sequence incorporates essential validation steps, including authenticating private channel subscriptions, verifying valid GPS coordinates within Bulan boundaries, and ensuring data synchronization without consuming excessive device resources.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; Performance Efficiency</h4>
+    <p>
+      Overall, the sequence diagram provides a clear visualization of real-time location tracking and data synchronization, demonstrating how map-based technologies improve delivery coordination, reduce waiting uncertainty, and enhance customer experience in alignment with ISO/IEC 25010 Performance Efficiency.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig412">sequenceDiagram
@@ -2208,12 +3029,13 @@ sequenceDiagram
       <div class="card-header">
         <div class="card-title-group">
           <h2><span>🔐</span> Fig. 4.13: Password Reset & Authentication OTP Verification Flow</h2>
-          <p>Cryptographic One-Time Password verification protocol with 60-second throttling, 10-minute expiry, and single-use token lifecycle</p>
+          <p>Sequence diagram of secure user authentication, rate limiting, and OTP credential recovery flow</p>
         </div>
         <div class="card-actions">
           <button class="btn btn-primary" onclick="downloadSvg('chart-fig413', 'Fig_4_13_OTP_Verification_Flow')">Download SVG</button>
           <button class="btn" onclick="downloadPng('chart-fig413', 'Fig_4_13_OTP_Verification_Flow')">Download PNG</button>
           <button class="btn" onclick="copyMermaid('code-fig413')">Copy Code</button>
+          <button class="btn btn-outline" onclick="copyDescription('desc-fig413')">📋 Copy Description</button>
         </div>
       </div>
       <div class="card-body">
@@ -2224,7 +3046,7 @@ sequenceDiagram
     participant App as 📱 Mobile App (ModalSheet)
     participant API as 🛡️ Laravel Auth API
     participant Mailer as ✉️ Titan SMTP Mail Server
-    participant DB as 🗄️ MySQL Database
+    participant DB as 🗄️ PostgreSQL Database
 
     User->>App: Clicks "Forgot Password?" & Inputs Email
     App->>API: POST /api/forgot-password/send-otp {email}
@@ -2262,9 +3084,46 @@ sequenceDiagram
         </div>
       </div>
       <div class="card-footer">
-        <p class="academic-note">
-          <strong>Methodological Significance:</strong> Demonstrates the ISO/IEC 25010 Security sub-characteristic implementation (confidentiality, integrity, non-repudiation). Details the multi-tier protection against automated brute-force attacks via server-side 60-second rate-limiting, transient SHA-256 token hashing, rapid 10-minute validity expiry, and atomic single-use invalidation upon password reset completion.
-        </p>
+        <div class="capstone-desc-container" id="desc-fig413">
+  <div class="desc-header-row">
+    <div class="desc-caption">
+      <span class="desc-badge">Chapter 4 Specification</span>
+      Figure 4.13: Password Reset &amp; Authentication OTP Verification Flow
+    </div>
+  </div>
+  
+  <div class="desc-section">
+    <h4>1. Technical Overview &amp; Purpose</h4>
+    <p>
+      Figure 4.13 illustrates the sequence of actions and decision-making processes for user authentication and password recovery. As established in the system's security specifications, secure user identification enhances account security, ensures user authenticity, and protects the platform against unauthorized access or misuse.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>2. Verification Workflow &amp; Credential Recovery</h4>
+    <ul class="desc-list">
+      <li><strong>Password Reset Request:</strong> A user who forgets their password inputs their registered email address. The application transmits the request to the Laravel authentication API.</li>
+      <li><strong>Cooldown &amp; Rate-Limit Check:</strong> The system verifies if the request complies with rate-limiting rules (60-second cooldown). If valid, a secure 6-digit One-Time Password (OTP) is generated, hashed, and stored with an expiration window (10 minutes) in the database.</li>
+      <li><strong>Code Dispatch:</strong> The OTP is sent to the user's email address via the mail service. The mobile application initiates a countdown timer and prompts for code entry.</li>
+      <li><strong>Code Verification:</strong> The user enters the received OTP. The system validates the code against the database record. If valid, the user is authorized to proceed to password entry.</li>
+      <li><strong>Password Update:</strong> The user submits a new secure password. The system verifies password requirements, updates the encrypted password in PostgreSQL, and invalidates the OTP token to complete the process.</li>
+    </ul>
+  </div>
+
+  <div class="desc-section">
+    <h4>3. Decision Points &amp; Error Handling</h4>
+    <p>
+      Decision points are integrated throughout the flow to handle rate limit violations, invalid email inputs, incorrect or expired OTP entries, and password complexity validation. Clear error feedback and prompts guide users through each step, ensuring system reliability and account safety.
+    </p>
+  </div>
+
+  <div class="desc-section">
+    <h4>4. Overall Summary &amp; System Reliability</h4>
+    <p>
+      Overall, the figure provides a clear visualization of the authentication and credential recovery process, emphasizing account security, user authenticity, and reliable error handling within the mobile application.
+    </p>
+  </div>
+</div>
         <details>
           <summary>View Raw Mermaid Source</summary>
           <pre class="source-code" id="code-fig413">sequenceDiagram
@@ -2273,7 +3132,7 @@ sequenceDiagram
     participant App as 📱 Mobile App (ModalSheet)
     participant API as 🛡️ Laravel Auth API
     participant Mailer as ✉️ Titan SMTP Mail Server
-    participant DB as 🗄️ MySQL Database
+    participant DB as 🗄️ PostgreSQL Database
 
     User->>App: Clicks "Forgot Password?" & Inputs Email
     App->>API: POST /api/forgot-password/send-otp {email}
@@ -2337,6 +3196,22 @@ sequenceDiagram
       toast.textContent = msg;
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    
+    function copyDescription(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) {
+        showToast('Error: Description element not found.');
+        return;
+      }
+      // Extract text content cleanly
+      const text = el.innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Capstone description copied to clipboard!');
+      }).catch(err => {
+        console.error(err);
+      });
     }
 
     function copyMermaid(elementId) {
